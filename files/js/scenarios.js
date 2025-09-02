@@ -1,33 +1,33 @@
-// Game scenarios for Create.I.Destroy
+// Ancient trials and mystical scenarios for Create.I.Destroy
 
 export const scenarios = [
   {
     id: 1,
-    text: "🌀 DIMENSIONAL RIFT DETECTED 🌀\nA tear in reality appears before you. Strange whispers echo from within. Something is calling...",
+    text: "🌟 ANCIENT ORACLE AWAKENS 🌟\nThe sacred crystal sphere begins to glow with ethereal light. Ancient whispers echo from within, speaking of forgotten prophecies...",
     choices: [
       {
         key: 'Q',
-        label: 'LEAP INTO THE VOID',
+        label: 'EMBRACE THE PROPHECY',
         result: {
-          feedback: '⚡ You embrace the unknown! Reality bends around you!',
+          feedback: '⚡ Thou dost accept thy destiny! The fates smile upon thee!',
           xp: 15,
           survival: 10
         }
       },
       {
         key: 'W',
-        label: 'SEAL THE RIFT',
+        label: 'REJECT THE CALLING',
         result: {
-          feedback: '🛡️ You stabilize reality, but miss the adventure...',
+          feedback: '🛡️ Thy caution preserves thee, yet opportunity fades...',
           xp: 5,
           survival: 15
         }
       },
       {
         key: 'E',
-        label: 'INVESTIGATE CAUTIOUSLY',
+        label: 'SEEK DEEPER UNDERSTANDING',
         result: {
-          feedback: '🔍 Careful observation reveals secrets of the cosmos!',
+          feedback: '🔍 Patience and wisdom reveal the cosmos\' secrets!',
           xp: 12,
           survival: 8
         }
@@ -36,31 +36,31 @@ export const scenarios = [
   },
   {
     id: 2,
-    text: "⚔️ SHADOW ASSASSIN EMERGES ⚔️\nFrom the darkness, a cloaked figure strikes! Their blade gleams with otherworldly energy!",
+    text: "⚔️ SHADOW KNIGHT EMERGES ⚔️\nFrom the mists of the forgotten realm, a wraith-clad warrior appears! Their cursed blade thirsts for battle!",
     choices: [
       {
         key: 'Q',
-        label: 'COUNTER-ATTACK',
+        label: 'DRAW STEEL AND FIGHT',
         result: {
-          feedback: '💥 Your reflexes are lightning! The assassin retreats!',
+          feedback: '💥 Thy blade rings true! The shadow retreats before thy valor!',
           xp: 18,
           survival: 5
         }
       },
       {
         key: 'W',
-        label: 'DODGE AND FLEE',
+        label: 'DODGE AND RETREAT',
         result: {
-          feedback: '💨 Speed saves your life! You escape into the night!',
+          feedback: '💨 Swift as the wind! Thou dost escape into the night!',
           xp: 8,
           survival: 12
         }
       },
       {
         key: 'E',
-        label: 'NEGOTIATE',
+        label: 'SPEAK WITH HONOR',
         result: {
-          feedback: '🗣️ Words cut deeper than blades! You form an alliance!',
+          feedback: '🗣️ Noble words pierce deeper than steel! A pact is forged!',
           xp: 20,
           survival: 3
         }
@@ -69,22 +69,22 @@ export const scenarios = [
   },
   {
     id: 3,
-    text: "🔥 INFERNAL PORTAL OPENS 🔥\nThe ground cracks and hellfire erupts! Demonic entities begin to emerge!",
+    text: "🔥 INFERNAL GATEWAY OPENS 🔥\nThe earth cracks and hellfire erupts! Demonic shadows begin to emerge from the abyss!",
     choices: [
       {
         key: 'Q',
-        label: 'BANISH THE DEMONS',
+        label: 'BANISH THE DARKNESS',
         result: {
-          feedback: '✨ Your will proves stronger than darkness itself!',
+          feedback: '✨ Thy sacred will proves mightier than shadow itself!',
           xp: 22,
           survival: 1
         }
       },
       {
         key: 'W',
-        label: 'JOIN THE CHAOS',
+        label: 'EMBRACE THE CHAOS',
         result: {
-          feedback: '😈 You embrace the infernal power! Reality trembles!',
+          feedback: '😈 Thou dost wield infernal power! The realm trembles!',
           xp: 16,
           survival: 7
         }
@@ -93,7 +93,7 @@ export const scenarios = [
         key: 'E',
         label: 'SEEK HIGHER GROUND',
         result: {
-          feedback: '🏃 Strategic retreat! You find sanctuary above!',
+          feedback: '🏃 Tactical wisdom! Thou findest sanctuary above!',
           xp: 6,
           survival: 18
         }
@@ -102,31 +102,31 @@ export const scenarios = [
   },
   {
     id: 4,
-    text: "❄️ FROZEN WASTELAND SPREADS ❄️\nAn unnatural winter consumes everything! The cold threatens to freeze time itself!",
+    text: "❄️ CURSED WINTER DESCENDS ❄️\nAn ancient curse brings eternal winter! The cold threatens to freeze thy very soul!",
     choices: [
       {
         key: 'Q',
-        label: 'IGNITE INNER FIRE',
+        label: 'KINDLE THE SACRED FLAME',
         result: {
-          feedback: '🔥 Your passion melts the eternal ice! Spring returns!',
+          feedback: '🔥 Thy inner fire melts the cursed ice! Spring awakens!',
           xp: 14,
           survival: 9
         }
       },
       {
         key: 'W',
-        label: 'ADAPT TO THE COLD',
+        label: 'BECOME ONE WITH WINTER',
         result: {
-          feedback: '🧊 You become one with winter! Ice bends to your will!',
+          feedback: '🧊 Thou dost master the frost! Ice becomes thy ally!',
           xp: 11,
           survival: 14
         }
       },
       {
         key: 'E',
-        label: 'FIND SHELTER',
+        label: 'SEEK ANCIENT SHELTER',
         result: {
-          feedback: '🏠 Survival instincts guide you to warmth and safety!',
+          feedback: '🏰 Wisdom guides thee to a forgotten sanctuary!',
           xp: 7,
           survival: 16
         }
@@ -135,22 +135,22 @@ export const scenarios = [
   },
   {
     id: 5,
-    text: "🌟 COSMIC ENTITY APPEARS 🌟\nA being of pure starlight descends! It offers forbidden knowledge that could reshape existence!",
+    text: "🌟 CELESTIAL HERALD DESCENDS 🌟\nAn angel of starlight appears! It offers divine knowledge that could reshape thy destiny!",
     choices: [
       {
         key: 'Q',
-        label: 'ACCEPT THE KNOWLEDGE',
+        label: 'ACCEPT THE DIVINE WISDOM',
         result: {
-          feedback: '🧠 Your mind expands beyond mortal limits! TRANSCENDENCE!',
+          feedback: '🧠 Thy mind ascends beyond mortal bounds! ENLIGHTENMENT!',
           xp: 25,
           survival: 0
         }
       },
       {
         key: 'W',
-        label: 'REJECT THE OFFER',
+        label: 'HUMBLE REJECTION',
         result: {
-          feedback: '🛡️ Your humanity remains intact! Wisdom in restraint!',
+          feedback: '🛡️ Thy humility is rewarded! Wisdom in modesty!',
           xp: 8,
           survival: 20
         }
@@ -159,7 +159,7 @@ export const scenarios = [
         key: 'E',
         label: 'BARGAIN FOR PARTIAL TRUTH',
         result: {
-          feedback: '⚖️ Clever negotiation! You gain power without corruption!',
+          feedback: '⚖️ Clever negotiation! Thou dost gain power without peril!',
           xp: 17,
           survival: 11
         }
@@ -168,31 +168,31 @@ export const scenarios = [
   },
   {
     id: 6,
-    text: "⚡ REALITY STORM APPROACHING ⚡\nThe fabric of existence tears apart! Laws of physics become mere suggestions!",
+    text: "⚡ ARCANE TEMPEST APPROACHES ⚡\nThe very fabric of magic tears asunder! Ancient laws become but whispers!",
     choices: [
       {
         key: 'Q',
-        label: 'RIDE THE STORM',
+        label: 'RIDE THE MYSTICAL WINDS',
         result: {
-          feedback: '🌪️ You surf the chaos waves! Reality bends to your will!',
+          feedback: '🌪️ Thou dost surf the chaos! Magic bends to thy will!',
           xp: 19,
           survival: 4
         }
       },
       {
         key: 'W',
-        label: 'CREATE A REALITY ANCHOR',
+        label: 'WEAVE A STABILITY WARD',
         result: {
-          feedback: '⚓ Your will stabilizes the storm! Order from chaos!',
+          feedback: '⚓ Thy enchantment calms the storm! Order from madness!',
           xp: 13,
           survival: 13
         }
       },
       {
         key: 'E',
-        label: 'PHASE BETWEEN REALITIES',
+        label: 'PHASE BETWEEN REALMS',
         result: {
-          feedback: '👻 You slip between worlds! The storm passes harmlessly!',
+          feedback: '👻 Thou dost slip between worlds! The tempest passes!',
           xp: 10,
           survival: 17
         }
@@ -201,13 +201,13 @@ export const scenarios = [
   },
   {
     id: 7,
-    text: "🕳️ VOID WHISPERS SECRETS 🕳️\nThe emptiness between worlds speaks! It knows your deepest fears and desires!",
+    text: "🕳️ VOID WHISPERS SECRETS 🕳️\nThe emptiness between worlds speaks! It knows thy deepest fears and desires!",
     choices: [
       {
         key: 'Q',
         label: 'LISTEN TO THE WHISPERS',
         result: {
-          feedback: '👂 Dark truths reveal themselves! Knowledge is power!',
+          feedback: '👂 Dark truths reveal themselves! Knowledge brings power!',
           xp: 21,
           survival: 2
         }
@@ -216,16 +216,16 @@ export const scenarios = [
         key: 'W',
         label: 'SILENCE THE VOID',
         result: {
-          feedback: '🤫 Your will overcomes nothingness! Silence reigns!',
+          feedback: '🤫 Thy will overcomes nothingness! Sacred silence reigns!',
           xp: 12,
           survival: 15
         }
       },
       {
         key: 'E',
-        label: 'WHISPER BACK',
+        label: 'WHISPER BACK ANCIENT WORDS',
         result: {
-          feedback: '🗣️ You speak to infinity! The void becomes your ally!',
+          feedback: '🗣️ Thou dost speak to infinity! The void becomes thy ally!',
           xp: 16,
           survival: 8
         }
@@ -234,31 +234,31 @@ export const scenarios = [
   },
   {
     id: 8,
-    text: "🌀 TIME LOOP DETECTED 🌀\nYou realize you've been here before... and before... and before. Break the cycle!",
+    text: "🌀 TEMPORAL CURSE DETECTED 🌀\nThou hast been here before... and before... and before. Break this endless cycle!",
     choices: [
       {
         key: 'Q',
-        label: 'SHATTER THE LOOP',
+        label: 'SHATTER THE CURSE',
         result: {
-          feedback: '💥 Time explodes around you! Linear existence restored!',
+          feedback: '💥 Time breaks around thee! Linear fate restored!',
           xp: 23,
           survival: 1
         }
       },
       {
         key: 'W',
-        label: 'USE THE LOOP',
+        label: 'MASTER THE REPETITION',
         result: {
-          feedback: '⏰ Perfect repetition! You master the moment!',
+          feedback: '⏰ Perfect repetition! Thou dost command this moment!',
           xp: 15,
           survival: 12
         }
       },
       {
         key: 'E',
-        label: 'ACCEPT ETERNITY',
+        label: 'EMBRACE ETERNAL PATIENCE',
         result: {
-          feedback: '♾️ Infinite patience! You find peace in repetition!',
+          feedback: '♾️ Infinite wisdom! Thou findest peace in repetition!',
           xp: 9,
           survival: 19
         }
@@ -267,31 +267,31 @@ export const scenarios = [
   },
   {
     id: 9,
-    text: "🐉 ANCIENT DRAGON AWAKENS 🐉\nA colossal wyrm emerges from the earth's core! Its eyes burn with the fury of millennia!",
+    text: "🐉 ANCIENT DRAGON AWAKENS 🐉\nA colossal wyrm emerges from the earth's heart! Its eyes burn with the fury of ages!",
     choices: [
       {
         key: 'Q',
-        label: 'CHALLENGE THE DRAGON',
+        label: 'CHALLENGE THE GREAT WYRM',
         result: {
-          feedback: '⚔️ Your courage is legendary! The dragon respects your spirit!',
+          feedback: '⚔️ Thy courage is legendary! The dragon respects thy spirit!',
           xp: 30,
           survival: 1
         }
       },
       {
         key: 'W',
-        label: 'OFFER TRIBUTE',
+        label: 'OFFER ANCIENT TRIBUTE',
         result: {
-          feedback: '💎 Wisdom and wealth save the day! The dragon retreats!',
+          feedback: '💎 Wisdom and tribute save thee! The dragon retreats!',
           xp: 12,
           survival: 18
         }
       },
       {
         key: 'E',
-        label: 'SPEAK THE ANCIENT WORDS',
+        label: 'SPEAK THE DRACONIC WORDS',
         result: {
-          feedback: '📜 Forgotten magic still flows! The dragon becomes your ally!',
+          feedback: '📜 Forgotten magic stirs! The dragon becomes thy ally!',
           xp: 25,
           survival: 8
         }
@@ -300,31 +300,31 @@ export const scenarios = [
   },
   {
     id: 10,
-    text: "🌊 TSUNAMI OF SOULS 🌊\nA wave of departed spirits crashes toward you! They seek to reclaim the living world!",
+    text: "🌊 TIDE OF RESTLESS SOULS 🌊\nA wave of departed spirits crashes toward thee! They seek to reclaim the living realm!",
     choices: [
       {
         key: 'Q',
-        label: 'DIVE INTO THE WAVE',
+        label: 'DIVE INTO THE SPECTRAL TIDE',
         result: {
-          feedback: '👻 You join the eternal dance! Death and life become one!',
+          feedback: '👻 Thou dost join the eternal dance! Death and life unite!',
           xp: 28,
           survival: 0
         }
       },
       {
         key: 'W',
-        label: 'CREATE A SPIRITUAL BARRIER',
+        label: 'WEAVE A SPIRITUAL WARD',
         result: {
-          feedback: '✨ Your will parts the sea of souls! Life preserves!',
+          feedback: '✨ Thy will parts the sea of souls! Life endures!',
           xp: 15,
           survival: 16
         }
       },
       {
         key: 'E',
-        label: 'GUIDE THEM TO PEACE',
+        label: 'GUIDE THEM TO ETERNAL REST',
         result: {
-          feedback: '🕊️ Your compassion calms the restless dead! Harmony restored!',
+          feedback: '🕊️ Thy compassion calms the restless dead! Peace restored!',
           xp: 22,
           survival: 6
         }
@@ -333,31 +333,31 @@ export const scenarios = [
   },
   {
     id: 11,
-    text: "🌙 LUNAR ECLIPSE OF POWER 🌙\nThe moon turns blood red! Dark energies surge through the cosmos!",
+    text: "🌙 BLOOD MOON OF ANCIENT POWER 🌙\nThe moon turns crimson! Dark energies surge through the celestial realm!",
     choices: [
       {
         key: 'Q',
-        label: 'ABSORB THE DARK POWER',
+        label: 'ABSORB THE DARK ENERGIES',
         result: {
-          feedback: '🌑 Darkness flows through you! You become night incarnate!',
+          feedback: '🌑 Darkness flows through thee! Thou becomest night incarnate!',
           xp: 26,
           survival: 3
         }
       },
       {
         key: 'W',
-        label: 'REFLECT THE LIGHT',
+        label: 'REFLECT THE SACRED LIGHT',
         result: {
-          feedback: '💫 You become a beacon! Light conquers the eclipse!',
+          feedback: '💫 Thou dost become a beacon! Light conquers the eclipse!',
           xp: 18,
           survival: 14
         }
       },
       {
         key: 'E',
-        label: 'BALANCE THE FORCES',
+        label: 'BALANCE THE COSMIC FORCES',
         result: {
-          feedback: '⚖️ Perfect equilibrium! Light and dark unite within you!',
+          feedback: '⚖️ Perfect equilibrium! Light and dark unite within thee!',
           xp: 24,
           survival: 9
         }
@@ -366,31 +366,31 @@ export const scenarios = [
   },
   {
     id: 12,
-    text: "🔮 CRYSTAL OF INFINITE POSSIBILITY 🔮\nA perfect gem contains every potential future! Touch it and reshape destiny!",
+    text: "🔮 CRYSTAL OF INFINITE DESTINY 🔮\nA perfect gem contains every potential fate! Touch it and reshape thy destiny!",
     choices: [
       {
         key: 'Q',
         label: 'SHATTER ALL POSSIBILITIES',
         result: {
-          feedback: '💥 Pure chaos! Reality becomes a wild storm of potential!',
+          feedback: '💥 Pure chaos! Fate becomes a wild storm of potential!',
           xp: 35,
           survival: 0
         }
       },
       {
         key: 'W',
-        label: 'CHOOSE ONE PERFECT FUTURE',
+        label: 'CHOOSE ONE PERFECT FATE',
         result: {
-          feedback: '🎯 Destiny locked! You forge the ideal timeline!',
+          feedback: '🎯 Destiny locked! Thou dost forge the ideal timeline!',
           xp: 20,
           survival: 15
         }
       },
       {
         key: 'E',
-        label: 'MERGE ALL TIMELINES',
+        label: 'MERGE ALL DESTINIES',
         result: {
-          feedback: '🌀 Infinite convergence! You become the master of fate!',
+          feedback: '🌀 Infinite convergence! Thou becomest master of fate!',
           xp: 32,
           survival: 2
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create.I.Destroy - Reality Survival Game</title>
+    <title>Create.I.Destroy - Ancient Trials of Fate</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,22 +11,22 @@
         <header class="game-header">
             <h1 class="game-title">CREATE.I.DESTROY</h1>
             <div class="stats">
-                <span id="xp-total" class="stat">⚡ XP: 0</span>
-                <span id="survival-total" class="stat">🏆 Survival: 0</span>
+                <span id="xp-total" class="stat">⚡ Wisdom: 0</span>
+                <span id="survival-total" class="stat">🏺 Fortune: 0</span>
                 <select id="difficulty-select" class="difficulty-select">
-                    <option value="easy">🟢 Easy</option>
-                    <option value="normal" selected>🟡 Normal</option>
-                    <option value="hard">🟠 Hard</option>
-                    <option value="nightmare">🔴 Nightmare</option>
+                    <option value="easy">🟢 Novice</option>
+                    <option value="normal" selected>🟡 Adept</option>
+                    <option value="hard">🟠 Master</option>
+                    <option value="nightmare">🔴 Legendary</option>
                 </select>
-                <button id="stats-btn" class="stat-btn">📊 Stats</button>
-                <button id="restart-btn" class="stat-btn">🔄 Restart</button>
+                <button id="stats-btn" class="stat-btn">📜 Chronicles</button>
+                <button id="restart-btn" class="stat-btn">🔄 Begin Anew</button>
             </div>
         </header>
         
         <main id="app" class="game-main">
             <div class="loading">
-                <div class="loading-text">INITIALIZING REALITY BREACH...</div>
+                <div class="loading-text">AWAKENING THE ANCIENT SPIRITS...</div>
                 <div class="loading-bar">
                     <div class="loading-fill"></div>
                 </div>
@@ -35,42 +35,42 @@
         
         <footer class="game-footer">
             <div class="instructions">
-                Press the highlighted keys to make your choice quickly!
+                Press the marked runes to choose thy path with haste!
             </div>
         </footer>
     </div>
     
-    <!-- Stats Modal -->
+    <!-- Chronicles Modal -->
     <div id="stats-modal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📊 REALITY STATISTICS</h2>
+                <h2>📜 CHRONICLES OF FATE</h2>
                 <button id="close-stats" class="close-btn">×</button>
             </div>
             <div class="modal-body">
                 <div class="stat-grid">
                     <div class="stat-item">
-                        <span class="stat-label">Current Difficulty:</span>
-                        <span id="current-difficulty" class="stat-value">Normal</span>
+                        <span class="stat-label">Current Trial:</span>
+                        <span id="current-difficulty" class="stat-value">Adept</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Games Played:</span>
+                        <span class="stat-label">Quests Undertaken:</span>
                         <span id="games-played" class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Total Choices Made:</span>
+                        <span class="stat-label">Paths Chosen:</span>
                         <span id="total-choices" class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Highest Combo:</span>
+                        <span class="stat-label">Greatest Succession:</span>
                         <span id="highest-combo" class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Current Session XP:</span>
+                        <span class="stat-label">Session Wisdom:</span>
                         <span id="session-xp" class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Current Session Survival:</span>
+                        <span class="stat-label">Session Fortune:</span>
                         <span id="session-survival" class="stat-value">0</span>
                     </div>
                 </div>
