@@ -264,5 +264,137 @@ export const scenarios = [
         }
       }
     ]
+  },
+  {
+    id: 9,
+    text: "🐉 ANCIENT DRAGON AWAKENS 🐉\nA colossal wyrm emerges from the earth's core! Its eyes burn with the fury of millennia!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'CHALLENGE THE DRAGON',
+        result: {
+          feedback: '⚔️ Your courage is legendary! The dragon respects your spirit!',
+          xp: 30,
+          survival: 1
+        }
+      },
+      {
+        key: 'W',
+        label: 'OFFER TRIBUTE',
+        result: {
+          feedback: '💎 Wisdom and wealth save the day! The dragon retreats!',
+          xp: 12,
+          survival: 18
+        }
+      },
+      {
+        key: 'E',
+        label: 'SPEAK THE ANCIENT WORDS',
+        result: {
+          feedback: '📜 Forgotten magic still flows! The dragon becomes your ally!',
+          xp: 25,
+          survival: 8
+        }
+      }
+    ]
+  },
+  {
+    id: 10,
+    text: "🌊 TSUNAMI OF SOULS 🌊\nA wave of departed spirits crashes toward you! They seek to reclaim the living world!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'DIVE INTO THE WAVE',
+        result: {
+          feedback: '👻 You join the eternal dance! Death and life become one!',
+          xp: 28,
+          survival: 0
+        }
+      },
+      {
+        key: 'W',
+        label: 'CREATE A SPIRITUAL BARRIER',
+        result: {
+          feedback: '✨ Your will parts the sea of souls! Life preserves!',
+          xp: 15,
+          survival: 16
+        }
+      },
+      {
+        key: 'E',
+        label: 'GUIDE THEM TO PEACE',
+        result: {
+          feedback: '🕊️ Your compassion calms the restless dead! Harmony restored!',
+          xp: 22,
+          survival: 6
+        }
+      }
+    ]
+  },
+  {
+    id: 11,
+    text: "🌙 LUNAR ECLIPSE OF POWER 🌙\nThe moon turns blood red! Dark energies surge through the cosmos!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'ABSORB THE DARK POWER',
+        result: {
+          feedback: '🌑 Darkness flows through you! You become night incarnate!',
+          xp: 26,
+          survival: 3
+        }
+      },
+      {
+        key: 'W',
+        label: 'REFLECT THE LIGHT',
+        result: {
+          feedback: '💫 You become a beacon! Light conquers the eclipse!',
+          xp: 18,
+          survival: 14
+        }
+      },
+      {
+        key: 'E',
+        label: 'BALANCE THE FORCES',
+        result: {
+          feedback: '⚖️ Perfect equilibrium! Light and dark unite within you!',
+          xp: 24,
+          survival: 9
+        }
+      }
+    ]
+  },
+  {
+    id: 12,
+    text: "🔮 CRYSTAL OF INFINITE POSSIBILITY 🔮\nA perfect gem contains every potential future! Touch it and reshape destiny!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'SHATTER ALL POSSIBILITIES',
+        result: {
+          feedback: '💥 Pure chaos! Reality becomes a wild storm of potential!',
+          xp: 35,
+          survival: 0
+        }
+      },
+      {
+        key: 'W',
+        label: 'CHOOSE ONE PERFECT FUTURE',
+        result: {
+          feedback: '🎯 Destiny locked! You forge the ideal timeline!',
+          xp: 20,
+          survival: 15
+        }
+      },
+      {
+        key: 'E',
+        label: 'MERGE ALL TIMELINES',
+        result: {
+          feedback: '🌀 Infinite convergence! You become the master of fate!',
+          xp: 32,
+          survival: 2
+        }
+      }
+    ]
   }
 ];
