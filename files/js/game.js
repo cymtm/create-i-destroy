@@ -57,8 +57,8 @@ function playSoundEffect(effectType) {
 }
 
 let state = {
-  xp: 0,
-  survival: 0,
+  xp: 0, // Now represents Static absorption
+  survival: 0, // Now represents Sanity preservation
   combo: 0,
   scenarioQueue: [],
   current: null,
@@ -67,7 +67,7 @@ let state = {
   gamesPlayed: 0,
   totalChoices: 0,
   highestCombo: 0,
-  difficulty: 'normal', // easy, normal, hard, nightmare
+  difficulty: 'normal', // observer, inhabitant, static-touched, warrenwalker
 };
 
 const difficultySettings = {
@@ -89,7 +89,7 @@ async function playScenario() {
   nextScenario();
   renderScenario(state.current);
   renderProgressBar(100);
-  renderFeedback('REALITY BREACH DETECTED...', 'flame');
+  renderFeedback('WARREN BREACH DETECTED...', 'flame');
   changeBackground();
 
   // Decision timer - affected by difficulty
@@ -139,7 +139,7 @@ async function playScenario() {
       }
       if (state.combo >= 3) {
         playSoundEffect('legendary');
-        renderAchievement('🔥LEGENDARY MOMENT🔥');
+        renderAchievement('🌀STATIC RESONANCE ACHIEVED🌀');
         state.legendaryTimer = Date.now();
         state.combo = 0;
       }
@@ -160,7 +160,7 @@ async function playScenario() {
     clearInterval(timer);
 
     setTimeout(() => {
-      renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
+      renderFeedback(`WARREN SHIFT IN 3...2...1...`, 'flame');
     }, 800);
     setTimeout(() => {
       playScenario();
@@ -193,12 +193,12 @@ async function playScenario() {
       
       // Auto-pick: fail state
       renderScenario(state.current);
-      renderFeedback('⚡ CHOICE LOCKED IN... TOO LATE!', 'fail');
+      renderFeedback('⚡ STATIC CLAIMS YOU... MIND FRAGMENTING!', 'fail');
       renderXP(0, 0);
       state.combo = 0;
 
       setTimeout(() => {
-        renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
+        renderFeedback(`WARREN SHIFT IN 3...2...1...`, 'flame');
       }, 800);
       setTimeout(() => {
         playScenario();
@@ -211,10 +211,10 @@ async function playScenario() {
 
 function changeBackground() {
   const colors = [
-    'linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a1a1a)',
-    'linear-gradient(45deg, #1a0a0a, #0a1a0a, #0a0a1a)',
-    'linear-gradient(45deg, #2a0a0a, #0a2a0a, #0a0a2a)',
-    'linear-gradient(45deg, #1a1a0a, #1a0a1a, #0a1a1a)'
+    'linear-gradient(45deg, #0a0a0a, #1a0a0a, #0a0a1a)', // Deep void
+    'linear-gradient(45deg, #1a0a1a, #0a1a0a, #2a0a0a)', // Static bleed
+    'linear-gradient(45deg, #0a1a1a, #1a1a0a, #0a0a2a)', // Warren depths
+    'linear-gradient(45deg, #2a0a1a, #1a2a0a, #0a1a2a)'  // System corruption
   ];
   const randomIndex = randomBetween(0, colors.length - 1);
   document.body.style.background = colors[randomIndex];
@@ -224,8 +224,8 @@ function changeBackground() {
 function updateTotalStats() {
   const xpElement = document.getElementById('xp-total');
   const survivalElement = document.getElementById('survival-total');
-  if (xpElement) xpElement.textContent = `⚡ XP: ${state.xp}`;
-  if (survivalElement) survivalElement.textContent = `🏆 Survival: ${state.survival}`;
+  if (xpElement) xpElement.textContent = `⚡ Static: ${state.xp}`;
+  if (survivalElement) survivalElement.textContent = `🧠 Sanity: ${state.survival}`;
 }
 
 function saveGame() {
@@ -233,11 +233,11 @@ function saveGame() {
     ...state,
     timestamp: Date.now()
   };
-  localStorage.setItem('createiDestroySave', JSON.stringify(saveData));
+  localStorage.setItem('warrenSystemSave', JSON.stringify(saveData));
 }
 
 function loadGame() {
-  const saveData = localStorage.getItem('createiDestroySave');
+  const saveData = localStorage.getItem('warrenSystemSave');
   if (saveData) {
     const parsed = JSON.parse(saveData);
     // Only load persistent stats, not current game state
@@ -261,9 +261,19 @@ function resetGameSession() {
   updateTotalStats();
 }
 
+function getDifficultyDisplayName(difficulty) {
+  const displayNames = {
+    easy: 'Observer',
+    normal: 'Inhabitant', 
+    hard: 'Static-touched',
+    nightmare: 'Warrenwalker'
+  };
+  return displayNames[difficulty] || difficulty;
+}
+
 function showStats() {
   const modal = document.getElementById('stats-modal');
-  document.getElementById('current-difficulty').textContent = state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1);
+  document.getElementById('current-difficulty').textContent = getDifficultyDisplayName(state.difficulty);
   document.getElementById('games-played').textContent = state.gamesPlayed;
   document.getElementById('total-choices').textContent = state.totalChoices;
   document.getElementById('highest-combo').textContent = state.highestCombo;
@@ -278,7 +288,7 @@ function hideStats() {
 }
 
 function restartGame() {
-  if (confirm('Are you sure you want to restart? This will reset your current session progress.')) {
+  if (confirm('Are you sure you want to restart? This will reset your current iteration progress.')) {
     resetGameSession();
     playScenario();
     changeBackground();

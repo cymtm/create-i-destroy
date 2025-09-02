@@ -37,24 +37,24 @@ body {
 .game-header {
     text-align: center;
     margin-bottom: 30px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 15px;
-    border: 2px solid #ff4444;
-    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+    border: 2px solid #aa0000;
+    box-shadow: 0 0 30px rgba(170, 0, 0, 0.4);
 }
 
 .game-title {
     font-family: 'Orbitron', monospace;
     font-size: 3rem;
     font-weight: 900;
-    background: linear-gradient(45deg, #ff4444, #ffaa44, #44ff44, #4444ff, #ff44ff);
+    background: linear-gradient(45deg, #ff0000, #ff4444, #880000, #aa0000, #440000);
     background-size: 400% 400%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
     margin-bottom: 15px;
 }
 
