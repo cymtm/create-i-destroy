@@ -59,6 +59,7 @@ async function playScenario() {
     renderXP(choice.result.xp, choice.result.survival);
     state.xp += choice.result.xp;
     state.survival += choice.result.survival;
+    updateTotalStats();
     if (choice.result.xp >= 10) {
       state.combo += 1;
       if (state.combo >= 3) {
@@ -115,13 +116,27 @@ async function playScenario() {
 }
 
 function changeBackground() {
-  const imageCount = 3; // Assuming 3 images named unsettling_image_1.png, etc.
-  const randomImageIndex = randomBetween(1, imageCount);
-  document.body.style.backgroundImage = `url('../../../generated_assets/unsettling_image_${randomImageIndex}.png')`;
+  const colors = [
+    'linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a1a1a)',
+    'linear-gradient(45deg, #1a0a0a, #0a1a0a, #0a0a1a)',
+    'linear-gradient(45deg, #2a0a0a, #0a2a0a, #0a0a2a)',
+    'linear-gradient(45deg, #1a1a0a, #1a0a1a, #0a1a1a)'
+  ];
+  const randomIndex = randomBetween(0, colors.length - 1);
+  document.body.style.background = colors[randomIndex];
+  document.body.style.backgroundSize = '400% 400%';
+}
+
+function updateTotalStats() {
+  const xpElement = document.getElementById('xp-total');
+  const survivalElement = document.getElementById('survival-total');
+  if (xpElement) xpElement.textContent = `⚡ XP: ${state.xp}`;
+  if (survivalElement) survivalElement.textContent = `🏆 Survival: ${state.survival}`;
 }
 
 // Start game
 window.addEventListener('DOMContentLoaded', () => {
+  updateTotalStats();
   playScenario();
   changeBackground(); // Set initial background
 });
