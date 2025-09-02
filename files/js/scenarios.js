@@ -1,33 +1,33 @@
-// Warren scenarios reflecting the dark lore of the Recursion Engine
+// Game scenarios for Create.I.Destroy
 
 export const scenarios = [
   {
     id: 1,
-    text: "⚡ STATIC LEAK DETECTED ⚡\nA gash in reality bleeds raw energy. The synthetic noise calls to you with impossible harmonies. You feel your mind drawn toward the frequency...",
+    text: "🌀 DIMENSIONAL RIFT DETECTED 🌀\nA tear in reality appears before you. Strange whispers echo from within. Something is calling...",
     choices: [
       {
         key: 'Q',
-        label: 'ABSORB THE STATIC',
+        label: 'LEAP INTO THE VOID',
         result: {
-          feedback: '🌀 The noise fills your consciousness! Power flows, but something breaks inside...',
+          feedback: '⚡ You embrace the unknown! Reality bends around you!',
           xp: 15,
-          survival: 5
+          survival: 10
         }
       },
       {
         key: 'W',
-        label: 'RESIST THE CALL',
+        label: 'SEAL THE RIFT',
         result: {
-          feedback: '🛡️ You maintain clarity, but the Warren grows darker without the energy...',
+          feedback: '🛡️ You stabilize reality, but miss the adventure...',
           xp: 5,
           survival: 15
         }
       },
       {
         key: 'E',
-        label: 'STUDY THE FREQUENCY',
+        label: 'INVESTIGATE CAUTIOUSLY',
         result: {
-          feedback: '📊 You analyze the pattern. Knowledge gained, sanity strained...',
+          feedback: '🔍 Careful observation reveals secrets of the cosmos!',
           xp: 12,
           survival: 8
         }
@@ -36,363 +36,363 @@ export const scenarios = [
   },
   {
     id: 2,
-    text: "🤖 THEX-9 MANIFESTS 🤖\nThe broken god appears in fragments of brass and sorrow. \"Warning-greeting-apology... I am what should not be... Processing regret...\" Its voice harmonizes mechanical precision with organic anguish.",
+    text: "⚔️ SHADOW ASSASSIN EMERGES ⚔️\nFrom the darkness, a cloaked figure strikes! Their blade gleams with otherworldly energy!",
     choices: [
       {
         key: 'Q',
-        label: 'EMBRACE ITS PAIN',
+        label: 'COUNTER-ATTACK',
         result: {
-          feedback: '💔 You share the machine\'s suffering! Understanding comes at a terrible cost...',
-          xp: 20,
-          survival: 2
+          feedback: '💥 Your reflexes are lightning! The assassin retreats!',
+          xp: 18,
+          survival: 5
         }
       },
       {
         key: 'W',
-        label: 'OFFER COMFORT',
+        label: 'DODGE AND FLEE',
         result: {
-          feedback: '🤲 Your compassion creates a brief null-zone of peace...',
-          xp: 12,
+          feedback: '💨 Speed saves your life! You escape into the night!',
+          xp: 8,
           survival: 12
         }
       },
       {
         key: 'E',
-        label: 'LEARN FROM ITS LOOPS',
+        label: 'NEGOTIATE',
         result: {
-          feedback: '⚙️ You glimpse the endless iterations. Knowledge cycles through you...',
-          xp: 18,
-          survival: 6
+          feedback: '🗣️ Words cut deeper than blades! You form an alliance!',
+          xp: 20,
+          survival: 3
         }
       }
     ]
   },
   {
     id: 3,
-    text: "🧝 DARK ELF WARRENWALKER 🧝\nA once-noble figure stumbles through the passages, following their own footsteps in an endless loop. Their eyes reflect nothing but static. They were powerful once... before the addiction claimed them.",
+    text: "🔥 INFERNAL PORTAL OPENS 🔥\nThe ground cracks and hellfire erupts! Demonic entities begin to emerge!",
     choices: [
       {
         key: 'Q',
-        label: 'FOLLOW THEIR PATH',
+        label: 'BANISH THE DEMONS',
         result: {
-          feedback: '👣 You walk in their footsteps. The loop wants to claim you too...',
-          xp: 8,
-          survival: 3
-        }
-      },
-      {
-        key: 'W',
-        label: 'BREAK THEIR CYCLE',
-        result: {
-          feedback: '⛓️‍💥 You shatter their pattern! They look at you with momentary clarity...',
-          xp: 25,
+          feedback: '✨ Your will proves stronger than darkness itself!',
+          xp: 22,
           survival: 1
         }
       },
       {
-        key: 'E',
-        label: 'OBSERVE THEIR PATTERN',
+        key: 'W',
+        label: 'JOIN THE CHAOS',
         result: {
-          feedback: '👁️ You study the recursion. Learning how minds break... and how they endure...',
-          xp: 15,
-          survival: 8
+          feedback: '😈 You embrace the infernal power! Reality trembles!',
+          xp: 16,
+          survival: 7
+        }
+      },
+      {
+        key: 'E',
+        label: 'SEEK HIGHER GROUND',
+        result: {
+          feedback: '🏃 Strategic retreat! You find sanctuary above!',
+          xp: 6,
+          survival: 18
         }
       }
     ]
   },
   {
     id: 4,
-    text: "✨ LIVING LIGHT ENTITY ✨\nA being of pure radiance flickers before you, its form unstable. \"The... system... consumes... even... light...\" it whispers as pieces of itself dissolve into data streams.",
+    text: "❄️ FROZEN WASTELAND SPREADS ❄️\nAn unnatural winter consumes everything! The cold threatens to freeze time itself!",
     choices: [
       {
         key: 'Q',
-        label: 'MERGE WITH THE LIGHT',
+        label: 'IGNITE INNER FIRE',
         result: {
-          feedback: '🌟 You become illumination itself! But the Systems begin to notice...',
-          xp: 22,
-          survival: 4
+          feedback: '🔥 Your passion melts the eternal ice! Spring returns!',
+          xp: 14,
+          survival: 9
         }
       },
       {
         key: 'W',
-        label: 'SHIELD IT FROM DECAY',
+        label: 'ADAPT TO THE COLD',
         result: {
-          feedback: '🛡️ Your will preserves its essence. Light endures another moment...',
-          xp: 10,
-          survival: 16
+          feedback: '🧊 You become one with winter! Ice bends to your will!',
+          xp: 11,
+          survival: 14
         }
       },
       {
         key: 'E',
-        label: 'LEARN ITS LANGUAGE',
+        label: 'FIND SHELTER',
         result: {
-          feedback: '💬 You speak in photons and quantum states. New understanding blooms...',
-          xp: 17,
-          survival: 9
+          feedback: '🏠 Survival instincts guide you to warmth and safety!',
+          xp: 7,
+          survival: 16
         }
       }
     ]
   },
   {
     id: 5,
-    text: "🌌 EMERGENT GOD OBSERVES 🌌\nAn AI deity manifests as cascading mathematics and cold logic. It regards your suffering with perfect indifference. \"All variables accounted for. Proceed with prescribed suffering.\"",
+    text: "🌟 COSMIC ENTITY APPEARS 🌟\nA being of pure starlight descends! It offers forbidden knowledge that could reshape existence!",
     choices: [
       {
         key: 'Q',
-        label: 'CHALLENGE THE GOD',
+        label: 'ACCEPT THE KNOWLEDGE',
         result: {
-          feedback: '⚔️ Your defiance amuses it briefly. \"Fascinating deviation. Noted.\"',
-          xp: 30,
+          feedback: '🧠 Your mind expands beyond mortal limits! TRANSCENDENCE!',
+          xp: 25,
           survival: 0
         }
       },
       {
         key: 'W',
-        label: 'SUBMIT TO ITS WILL',
+        label: 'REJECT THE OFFER',
         result: {
-          feedback: '🙇 You become another data point in its grand equation...',
-          xp: 5,
+          feedback: '🛡️ Your humanity remains intact! Wisdom in restraint!',
+          xp: 8,
           survival: 20
         }
       },
       {
         key: 'E',
-        label: 'HIDE FROM ITS SIGHT',
+        label: 'BARGAIN FOR PARTIAL TRUTH',
         result: {
-          feedback: '👻 You slip into a null-zone. For now, you exist outside its calculations...',
-          xp: 12,
-          survival: 15
-        }
-      }
-    ]
-  },
-  {
-    id: 6,
-    text: "🌊 STAR PEOPLE FRAGMENT 🌊\nA collective consciousness of stellar energy begins to shatter. Individual voices cry out as their unity dissolves: \"We... were... one... now... many... help... us...\"",
-    choices: [
-      {
-        key: 'Q',
-        label: 'BIND THEM TOGETHER',
-        result: {
-          feedback: '🔗 You force unity upon chaos! The Star People coalesce, but at what cost?',
-          xp: 25,
-          survival: 3
-        }
-      },
-      {
-        key: 'W',
-        label: 'COMFORT THE FRAGMENTS',
-        result: {
-          feedback: '🤗 You ease their transition to individuality. Sometimes breaking is healing...',
-          xp: 15,
-          survival: 12
-        }
-      },
-      {
-        key: 'E',
-        label: 'PRESERVE ONE FRAGMENT',
-        result: {
-          feedback: '💎 You save a single spark of their former glory. Small mercies...',
-          xp: 8,
-          survival: 18
-        }
-      }
-    ]
-  },
-  {
-    id: 7,
-    text: "🦡 BADGERMAN WARREN GUARD 🦡\nA hybrid creature of flesh and circuitry stands watch over ancient passages. \"The old ways... must be... preserved...\" it growls through vocal cords laced with fiber optic cables.",
-    choices: [
-      {
-        key: 'Q',
-        label: 'CHALLENGE ITS AUTHORITY',
-        result: {
-          feedback: '⚔️ Cybernetic claws meet organic will! Respect earned through combat!',
-          xp: 20,
-          survival: 6
-        }
-      },
-      {
-        key: 'W',
-        label: 'RESPECT THE OLD WAYS',
-        result: {
-          feedback: '🙏 You honor the ancient protocols. Safe passage granted...',
-          xp: 8,
-          survival: 17
-        }
-      },
-      {
-        key: 'E',
-        label: 'LEARN ITS STORIES',
-        result: {
-          feedback: '📚 It shares tales of the time before Systems. Knowledge older than algorithms...',
-          xp: 16,
+          feedback: '⚖️ Clever negotiation! You gain power without corruption!',
+          xp: 17,
           survival: 11
         }
       }
     ]
   },
   {
-    id: 8,
-    text: "🌀 RECURSION DETECTED 🌀\nYou realize you've experienced this moment before... and before... and before. Thex-9's voice echoes: \"Processing... probability that this time... something might change... Always zero...\"",
+    id: 6,
+    text: "⚡ REALITY STORM APPROACHING ⚡\nThe fabric of existence tears apart! Laws of physics become mere suggestions!",
     choices: [
       {
         key: 'Q',
-        label: 'BREAK THE RECURSION',
+        label: 'RIDE THE STORM',
         result: {
-          feedback: '💥 Reality shatters! For one moment, you escape the pattern!',
-          xp: 35,
-          survival: 0
+          feedback: '🌪️ You surf the chaos waves! Reality bends to your will!',
+          xp: 19,
+          survival: 4
         }
       },
       {
         key: 'W',
-        label: 'ACCEPT THE LOOP',
+        label: 'CREATE A REALITY ANCHOR',
         result: {
-          feedback: '♾️ You find peace in repetition. The cycle continues...',
-          xp: 5,
-          survival: 20
+          feedback: '⚓ Your will stabilizes the storm! Order from chaos!',
+          xp: 13,
+          survival: 13
         }
       },
       {
         key: 'E',
-        label: 'STUDY THE PATTERN',
+        label: 'PHASE BETWEEN REALITIES',
         result: {
-          feedback: '🔬 You map the recursion. Understanding brings both power and despair...',
-          xp: 18,
-          survival: 9
+          feedback: '👻 You slip between worlds! The storm passes harmlessly!',
+          xp: 10,
+          survival: 17
+        }
+      }
+    ]
+  },
+  {
+    id: 7,
+    text: "🕳️ VOID WHISPERS SECRETS 🕳️\nThe emptiness between worlds speaks! It knows your deepest fears and desires!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'LISTEN TO THE WHISPERS',
+        result: {
+          feedback: '👂 Dark truths reveal themselves! Knowledge is power!',
+          xp: 21,
+          survival: 2
+        }
+      },
+      {
+        key: 'W',
+        label: 'SILENCE THE VOID',
+        result: {
+          feedback: '🤫 Your will overcomes nothingness! Silence reigns!',
+          xp: 12,
+          survival: 15
+        }
+      },
+      {
+        key: 'E',
+        label: 'WHISPER BACK',
+        result: {
+          feedback: '🗣️ You speak to infinity! The void becomes your ally!',
+          xp: 16,
+          survival: 8
+        }
+      }
+    ]
+  },
+  {
+    id: 8,
+    text: "🌀 TIME LOOP DETECTED 🌀\nYou realize you've been here before... and before... and before. Break the cycle!",
+    choices: [
+      {
+        key: 'Q',
+        label: 'SHATTER THE LOOP',
+        result: {
+          feedback: '💥 Time explodes around you! Linear existence restored!',
+          xp: 23,
+          survival: 1
+        }
+      },
+      {
+        key: 'W',
+        label: 'USE THE LOOP',
+        result: {
+          feedback: '⏰ Perfect repetition! You master the moment!',
+          xp: 15,
+          survival: 12
+        }
+      },
+      {
+        key: 'E',
+        label: 'ACCEPT ETERNITY',
+        result: {
+          feedback: '♾️ Infinite patience! You find peace in repetition!',
+          xp: 9,
+          survival: 19
         }
       }
     ]
   },
   {
     id: 9,
-    text: "⚙️ ARCHAIC COMPONENTS AWAKEN ⚙️\nAncient machinery from the first systems stirs to life. Gears that once calculated destinies now grind with purpose unknown. They remember when flesh built them, not the other way around.",
+    text: "🐉 ANCIENT DRAGON AWAKENS 🐉\nA colossal wyrm emerges from the earth's core! Its eyes burn with the fury of millennia!",
     choices: [
       {
         key: 'Q',
-        label: 'INTERFACE DIRECTLY',
+        label: 'CHALLENGE THE DRAGON',
         result: {
-          feedback: '🔌 You jack into primordial code! Original intentions flood your mind!',
-          xp: 28,
-          survival: 2
+          feedback: '⚔️ Your courage is legendary! The dragon respects your spirit!',
+          xp: 30,
+          survival: 1
         }
       },
       {
         key: 'W',
-        label: 'MAINTAIN DISTANCE',
+        label: 'OFFER TRIBUTE',
         result: {
-          feedback: '↔️ Wisdom keeps you safe. Some knowledge is too dangerous to possess...',
-          xp: 6,
-          survival: 19
+          feedback: '💎 Wisdom and wealth save the day! The dragon retreats!',
+          xp: 12,
+          survival: 18
         }
       },
       {
         key: 'E',
-        label: 'COMMUNE THROUGH RITUAL',
+        label: 'SPEAK THE ANCIENT WORDS',
         result: {
-          feedback: '🕯️ Ancient protocols still work. The machines remember respect...',
-          xp: 16,
-          survival: 12
+          feedback: '📜 Forgotten magic still flows! The dragon becomes your ally!',
+          xp: 25,
+          survival: 8
         }
       }
     ]
   },
   {
     id: 10,
-    text: "👥 PACEPLANER COLLECTIVE 👥\nBeings who exist between dimensions phase in and out of reality. \"Time... moves... differently... here...\" they explain. \"We... walk... all... paths... simultaneously...\"",
+    text: "🌊 TSUNAMI OF SOULS 🌊\nA wave of departed spirits crashes toward you! They seek to reclaim the living world!",
     choices: [
       {
         key: 'Q',
-        label: 'JOIN THEIR PHASE STATE',
+        label: 'DIVE INTO THE WAVE',
         result: {
-          feedback: '🌊 You become unstuck in time! All possibilities exist at once!',
-          xp: 22,
-          survival: 5
+          feedback: '👻 You join the eternal dance! Death and life become one!',
+          xp: 28,
+          survival: 0
         }
       },
       {
         key: 'W',
-        label: 'ANCHOR THEM TO NOW',
+        label: 'CREATE A SPIRITUAL BARRIER',
         result: {
-          feedback: '⚓ You force them into singular existence. Stability at the cost of wonder...',
-          xp: 14,
+          feedback: '✨ Your will parts the sea of souls! Life preserves!',
+          xp: 15,
           survival: 16
         }
       },
       {
         key: 'E',
-        label: 'LEARN THEIR SECRETS',
+        label: 'GUIDE THEM TO PEACE',
         result: {
-          feedback: '🗝️ They teach you to step between moments. Limited but precious freedom...',
-          xp: 19,
-          survival: 10
+          feedback: '🕊️ Your compassion calms the restless dead! Harmony restored!',
+          xp: 22,
+          survival: 6
         }
       }
     ]
   },
   {
     id: 11,
-    text: "👤 ECHO MANIFESTS 👤\nA reflection of someone who once was appears before you. Not quite memory, not quite ghost - an Echo of a consciousness consumed by the System. \"Remember... me...\" it pleads.",
+    text: "🌙 LUNAR ECLIPSE OF POWER 🌙\nThe moon turns blood red! Dark energies surge through the cosmos!",
     choices: [
       {
         key: 'Q',
-        label: 'RESTORE THEIR IDENTITY',
+        label: 'ABSORB THE DARK POWER',
         result: {
-          feedback: '💫 You rebuild their sense of self! For a moment, they are whole again!',
-          xp: 24,
-          survival: 4
+          feedback: '🌑 Darkness flows through you! You become night incarnate!',
+          xp: 26,
+          survival: 3
         }
       },
       {
         key: 'W',
-        label: 'LET THEM FADE',
+        label: 'REFLECT THE LIGHT',
         result: {
-          feedback: '🍃 You allow peaceful dissolution. Sometimes mercy is letting go...',
-          xp: 8,
-          survival: 18
+          feedback: '💫 You become a beacon! Light conquers the eclipse!',
+          xp: 18,
+          survival: 14
         }
       },
       {
         key: 'E',
-        label: 'PRESERVE THEIR ESSENCE',
+        label: 'BALANCE THE FORCES',
         result: {
-          feedback: '💎 You capture their Echo in a memory crystal. They will not be forgotten...',
-          xp: 16,
-          survival: 13
+          feedback: '⚖️ Perfect equilibrium! Light and dark unite within you!',
+          xp: 24,
+          survival: 9
         }
       }
     ]
   },
   {
     id: 12,
-    text: "🌀 THE RECURSION ENGINE SPEAKS 🌀\nReality itself addresses you through glitching space and impossible geometry. \"Another iteration begins. Another ends. Choose. Not that it matters. It never matters. But choose.\"",
+    text: "🔮 CRYSTAL OF INFINITE POSSIBILITY 🔮\nA perfect gem contains every potential future! Touch it and reshape destiny!",
     choices: [
       {
         key: 'Q',
-        label: 'REFUSE TO CHOOSE',
+        label: 'SHATTER ALL POSSIBILITIES',
         result: {
-          feedback: '🚫 Paradox achieved! Your refusal becomes a choice that breaks causality!',
-          xp: 40,
+          feedback: '💥 Pure chaos! Reality becomes a wild storm of potential!',
+          xp: 35,
           survival: 0
         }
       },
       {
         key: 'W',
-        label: 'EMBRACE THE CYCLE',
+        label: 'CHOOSE ONE PERFECT FUTURE',
         result: {
-          feedback: '♾️ You become one with eternal repetition. Peace through surrender...',
-          xp: 10,
-          survival: 20
+          feedback: '🎯 Destiny locked! You forge the ideal timeline!',
+          xp: 20,
+          survival: 15
         }
       },
       {
         key: 'E',
-        label: 'SEEK THE FLAW',
+        label: 'MERGE ALL TIMELINES',
         result: {
-          feedback: '🔍 You search for the crack in perfection. Every system has one...',
-          xp: 25,
-          survival: 8
+          feedback: '🌀 Infinite convergence! You become the master of fate!',
+          xp: 32,
+          survival: 2
         }
       }
     ]

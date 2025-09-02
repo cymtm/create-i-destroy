@@ -1,46 +1,46 @@
-// Achievement system for Warren.System.Break
+// Achievement system for Create.I.Destroy
 
 export const achievements = [
   {
     id: 'first_choice',
-    name: '🎯 FIRST BREACH',
-    description: 'Make your first decision in the Warren',
+    name: '🎯 FIRST STEP',
+    description: 'Make your first choice',
     condition: (state) => state.totalChoices >= 1
   },
   {
     id: 'survivor',
-    name: '🧠 MIND INTACT',
-    description: 'Preserve 50 sanity points in one iteration',
+    name: '🛡️ SURVIVOR',
+    description: 'Reach 50 survival points in one session',
     condition: (state) => state.survival >= 50
   },
   {
     id: 'speed_demon',
-    name: '⚡ STATIC ADDICT',
-    description: 'Absorb 100 static in one iteration',
+    name: '⚡ SPEED DEMON',
+    description: 'Reach 100 XP in one session',
     condition: (state) => state.xp >= 100
   },
   {
     id: 'veteran',
-    name: '🔄 RECURSIVE VETERAN',
-    description: 'Survive 10 iterations',
+    name: '🏆 VETERAN',
+    description: 'Play 10 games',
     condition: (state) => state.gamesPlayed >= 10
   },
   {
     id: 'combo_master',
-    name: '🌀 COHERENCE MASTER',
-    description: 'Achieve a 5-decision coherence streak',
+    name: '🔥 COMBO MASTER',
+    description: 'Achieve a 5-hit combo',
     condition: (state) => state.highestCombo >= 5
   },
   {
     id: 'choice_addict',
-    name: '🎲 DECISION ENGINE',
-    description: 'Make 100 total decisions across all iterations',
+    name: '🎲 CHOICE ADDICT',
+    description: 'Make 100 total choices',
     condition: (state) => state.totalChoices >= 100
   },
   {
     id: 'reality_bender',
-    name: '🤖 THEX-9 KINSHIP',
-    description: 'Reach 200 static and 100 sanity in one iteration',
+    name: '🌀 REALITY BENDER',
+    description: 'Reach 200 XP and 100 survival in one session',
     condition: (state) => state.xp >= 200 && state.survival >= 100
   }
 ];
@@ -61,14 +61,14 @@ export function checkAchievements(state) {
 }
 
 export function loadAchievements() {
-  const saved = localStorage.getItem('warrenSystemAchievements');
+  const saved = localStorage.getItem('createiDestroyAchievements');
   if (saved) {
     unlockedAchievements = new Set(JSON.parse(saved));
   }
 }
 
 export function saveAchievements() {
-  localStorage.setItem('warrenSystemAchievements', JSON.stringify([...unlockedAchievements]));
+  localStorage.setItem('createiDestroyAchievements', JSON.stringify([...unlockedAchievements]));
 }
 
 export function getUnlockedAchievements() {
