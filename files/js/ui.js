@@ -46,8 +46,8 @@ export function renderXP(xp, survival) {
   const xpbar = document.getElementById('xpbar');
   if (xpbar) {
     xpbar.innerHTML = `
-      <span class="xp">+${xp} SPEED XP ⚡</span>
-      <span class="xp">+${survival} SURVIVAL 🏆</span>
+      <span class="xp">+${xp} WISDOM ⚡</span>
+      <span class="xp">+${survival} FORTUNE 🏺</span>
     `;
   }
 }

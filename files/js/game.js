@@ -89,7 +89,7 @@ async function playScenario() {
   nextScenario();
   renderScenario(state.current);
   renderProgressBar(100);
-  renderFeedback('REALITY BREACH DETECTED...', 'flame');
+  renderFeedback('ANCIENT PROPHECY UNFOLDS...', 'flame');
   changeBackground();
 
   // Decision timer - affected by difficulty
@@ -224,8 +224,8 @@ function changeBackground() {
 function updateTotalStats() {
   const xpElement = document.getElementById('xp-total');
   const survivalElement = document.getElementById('survival-total');
-  if (xpElement) xpElement.textContent = `⚡ XP: ${state.xp}`;
-  if (survivalElement) survivalElement.textContent = `🏆 Survival: ${state.survival}`;
+  if (xpElement) xpElement.textContent = `⚡ Wisdom: ${state.xp}`;
+  if (survivalElement) survivalElement.textContent = `🏺 Fortune: ${state.survival}`;
 }
 
 function saveGame() {
@@ -263,7 +263,13 @@ function resetGameSession() {
 
 function showStats() {
   const modal = document.getElementById('stats-modal');
-  document.getElementById('current-difficulty').textContent = state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1);
+  const difficultyNames = {
+    'easy': 'Novice',
+    'normal': 'Adept', 
+    'hard': 'Master',
+    'nightmare': 'Legendary'
+  };
+  document.getElementById('current-difficulty').textContent = difficultyNames[state.difficulty] || state.difficulty;
   document.getElementById('games-played').textContent = state.gamesPlayed;
   document.getElementById('total-choices').textContent = state.totalChoices;
   document.getElementById('highest-combo').textContent = state.highestCombo;

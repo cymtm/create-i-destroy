@@ -1,6 +1,6 @@
-/* Create.I.Destroy - Game Styles */
+/* Create.I.Destroy - Ancient Mystical Game Styles */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Uncial+Antiqua&family=MedievalSharp&display=swap');
 
 * {
     margin: 0;
@@ -9,14 +9,30 @@
 }
 
 body {
-    font-family: 'Rajdhani', sans-serif;
-    background: linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a1a1a);
+    font-family: 'Cinzel', serif;
+    background: linear-gradient(45deg, #1a1510, #2d2520, #1f1914);
     background-size: 400% 400%;
     animation: gradientShift 8s ease infinite;
-    color: #ffffff;
+    color: #e8dcc0;
     overflow-x: hidden;
     min-height: 100vh;
     background-attachment: fixed;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(139, 103, 54, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(101, 77, 47, 0.1) 0%, transparent 50%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23d4c4a8" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23d4c4a8" opacity="0.05"/><circle cx="50" cy="10" r="0.5" fill="%23d4c4a8" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+    z-index: -1;
 }
 
 @keyframes gradientShift {
@@ -37,30 +53,53 @@ body {
 .game-header {
     text-align: center;
     margin-bottom: 30px;
-    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, rgba(62, 47, 28, 0.9), rgba(101, 77, 47, 0.8));
     padding: 20px;
     border-radius: 15px;
-    border: 2px solid #aa0000;
-    box-shadow: 0 0 30px rgba(170, 0, 0, 0.4);
+    border: 3px solid #8b6736;
+    box-shadow: 
+        0 0 30px rgba(139, 103, 54, 0.4),
+        inset 0 1px 0 rgba(212, 196, 168, 0.2),
+        inset 0 -1px 0 rgba(62, 47, 28, 0.8);
+    position: relative;
+}
+
+.game-header::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #654d2f, #8b6736, #654d2f);
+    border-radius: 17px;
+    z-index: -1;
 }
 
 .game-title {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Uncial Antiqua', cursive;
     font-size: 3rem;
-    font-weight: 900;
-    background: linear-gradient(45deg, #ff0000, #ff4444, #880000, #aa0000, #440000);
+    font-weight: 400;
+    background: linear-gradient(45deg, #d4c4a8, #8b6736, #654d2f, #d4c4a8, #8b6736);
     background-size: 400% 400%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+    animation: gradientShift 4s ease infinite, ancientGlow 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(212, 196, 168, 0.3);
     margin-bottom: 15px;
+    letter-spacing: 2px;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+@keyframes ancientGlow {
+    0%, 100% { 
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(139, 103, 54, 0.5));
+    }
+    50% { 
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 15px rgba(212, 196, 168, 0.7));
+    }
 }
 
 .stats {
@@ -74,52 +113,66 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.3), rgba(101, 77, 47, 0.2));
     border-radius: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(212, 196, 168, 0.4);
+    box-shadow: 
+        0 2px 5px rgba(62, 47, 28, 0.3),
+        inset 0 1px 0 rgba(212, 196, 168, 0.1);
 }
 
 .stat-btn {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Cinzel', serif;
     font-size: 1rem;
     font-weight: 600;
     padding: 8px 16px;
-    background: rgba(255, 170, 68, 0.2);
-    border: 1px solid #ffaa44;
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.4), rgba(101, 77, 47, 0.3));
+    border: 1px solid #8b6736;
     border-radius: 25px;
-    color: #ffffff;
+    color: #e8dcc0;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 
+        0 2px 5px rgba(62, 47, 28, 0.3),
+        inset 0 1px 0 rgba(212, 196, 168, 0.1);
 }
 
 .stat-btn:hover {
-    background: rgba(255, 170, 68, 0.4);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.6), rgba(101, 77, 47, 0.5));
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 170, 68, 0.3);
+    box-shadow: 
+        0 0 15px rgba(139, 103, 54, 0.4),
+        0 3px 8px rgba(62, 47, 28, 0.4),
+        inset 0 1px 0 rgba(212, 196, 168, 0.2);
 }
 
 .difficulty-select {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Cinzel', serif;
     font-size: 1rem;
     font-weight: 600;
     padding: 8px 16px;
-    background: rgba(68, 255, 255, 0.2);
-    border: 1px solid #44ffff;
+    background: linear-gradient(135deg, rgba(101, 77, 47, 0.4), rgba(139, 103, 54, 0.3));
+    border: 1px solid #654d2f;
     border-radius: 25px;
-    color: #ffffff;
+    color: #e8dcc0;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 
+        0 2px 5px rgba(62, 47, 28, 0.3),
+        inset 0 1px 0 rgba(212, 196, 168, 0.1);
 }
 
 .difficulty-select:hover {
-    background: rgba(68, 255, 255, 0.4);
+    background: linear-gradient(135deg, rgba(101, 77, 47, 0.6), rgba(139, 103, 54, 0.5));
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(68, 255, 255, 0.3);
+    box-shadow: 
+        0 0 15px rgba(101, 77, 47, 0.4),
+        0 3px 8px rgba(62, 47, 28, 0.4);
 }
 
 .difficulty-select option {
-    background: #1a1a1a;
-    color: #ffffff;
+    background: #2d2520;
+    color: #e8dcc0;
 }
 
 .game-main {
@@ -159,7 +212,7 @@ body {
 
 .loading-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ff4444, #ffaa44);
+    background: linear-gradient(90deg, #8b6736, #d4c4a8);
     width: 100%;
     animation: loading 2s ease-in-out infinite;
 }
@@ -175,12 +228,28 @@ body {
     line-height: 1.4;
     margin-bottom: 30px;
     padding: 30px;
-    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, rgba(62, 47, 28, 0.9), rgba(101, 77, 47, 0.7));
     border-radius: 15px;
-    border: 2px solid #44ffff;
-    box-shadow: 0 0 25px rgba(68, 255, 255, 0.2);
+    border: 3px solid #8b6736;
+    box-shadow: 
+        0 0 25px rgba(139, 103, 54, 0.3),
+        inset 0 2px 0 rgba(212, 196, 168, 0.1),
+        inset 0 -2px 0 rgba(62, 47, 28, 0.8);
     max-width: 800px;
     animation: slideIn 0.5s ease-out;
+    position: relative;
+}
+
+.scenario::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(212, 196, 168, 0.2);
+    border-radius: 10px;
+    pointer-events: none;
 }
 
 @keyframes slideIn {
@@ -198,52 +267,80 @@ body {
 }
 
 .choice-btn {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Cinzel', serif;
     font-size: 1.2rem;
     font-weight: 600;
     padding: 15px 25px;
-    border: 2px solid #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    border: 2px solid #8b6736;
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.2), rgba(101, 77, 47, 0.1));
+    color: #e8dcc0;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
+    position: relative;
+    box-shadow: 
+        0 3px 6px rgba(62, 47, 28, 0.3),
+        inset 0 1px 0 rgba(212, 196, 168, 0.1);
+}
+
+.choice-btn::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #8b6736;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(139, 103, 54, 0.5);
 }
 
 .choice-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #ffaa44;
-    box-shadow: 0 0 15px rgba(255, 170, 68, 0.4);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.4), rgba(101, 77, 47, 0.3));
+    border-color: #d4c4a8;
+    box-shadow: 
+        0 0 15px rgba(139, 103, 54, 0.4),
+        0 4px 8px rgba(62, 47, 28, 0.4),
+        inset 0 1px 0 rgba(212, 196, 168, 0.2);
     transform: translateX(5px);
 }
 
 .choice-btn.active {
-    background: linear-gradient(45deg, #ff4444, #ffaa44);
-    border-color: #ffaa44;
-    box-shadow: 0 0 25px rgba(255, 170, 68, 0.6);
+    background: linear-gradient(135deg, #8b6736, #654d2f);
+    border-color: #d4c4a8;
+    box-shadow: 
+        0 0 25px rgba(212, 196, 168, 0.6),
+        0 5px 10px rgba(62, 47, 28, 0.5),
+        inset 0 2px 0 rgba(212, 196, 168, 0.2);
     transform: scale(1.05);
+    color: #f5f0e8;
 }
 
 .progress-bar-bg {
     width: 100%;
     height: 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.3), rgba(101, 77, 47, 0.2));
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(212, 196, 168, 0.4);
+    box-shadow: 
+        inset 0 2px 4px rgba(62, 47, 28, 0.3),
+        0 1px 2px rgba(212, 196, 168, 0.2);
 }
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #44ff44, #ffff44);
+    background: linear-gradient(90deg, #8b6736, #d4c4a8);
     transition: width 0.1s linear;
-    border-radius: 10px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 0 rgba(212, 196, 168, 0.3);
 }
 
 .progress-bar-fill.urgent {
-    background: linear-gradient(90deg, #ff4444, #ff8844);
+    background: linear-gradient(90deg, #a0522d, #d2691e);
     animation: urgentPulse 0.5s infinite;
 }
 
@@ -271,21 +368,27 @@ body {
 }
 
 .feedback.success {
-    background: rgba(68, 255, 68, 0.2);
-    border: 2px solid #44ff44;
-    box-shadow: 0 0 20px rgba(68, 255, 68, 0.3);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.3), rgba(212, 196, 168, 0.2));
+    border: 2px solid #8b6736;
+    box-shadow: 
+        0 0 20px rgba(139, 103, 54, 0.4),
+        inset 0 1px 0 rgba(212, 196, 168, 0.2);
 }
 
 .feedback.fail {
-    background: rgba(255, 68, 68, 0.2);
-    border: 2px solid #ff4444;
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+    background: linear-gradient(135deg, rgba(160, 82, 45, 0.3), rgba(210, 105, 30, 0.2));
+    border: 2px solid #a0522d;
+    box-shadow: 
+        0 0 20px rgba(160, 82, 45, 0.4),
+        inset 0 1px 0 rgba(210, 105, 30, 0.2);
 }
 
 .feedback.flame {
-    background: rgba(255, 170, 68, 0.2);
-    border: 2px solid #ffaa44;
-    box-shadow: 0 0 20px rgba(255, 170, 68, 0.3);
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.3), rgba(184, 134, 11, 0.2));
+    border: 2px solid #daa520;
+    box-shadow: 
+        0 0 20px rgba(218, 165, 32, 0.4),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
     animation: flameFlicker 1s infinite;
 }
 
@@ -306,10 +409,13 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     padding: 8px 16px;
-    background: rgba(255, 170, 68, 0.2);
-    border: 1px solid #ffaa44;
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.3), rgba(212, 196, 168, 0.2));
+    border: 1px solid #8b6736;
     border-radius: 20px;
     animation: xpPop 0.6s ease-out;
+    box-shadow: 
+        0 2px 4px rgba(62, 47, 28, 0.3),
+        inset 0 1px 0 rgba(212, 196, 168, 0.2);
 }
 
 @keyframes xpPop {
@@ -321,13 +427,13 @@ body {
 .legendary {
     font-size: 2rem;
     font-weight: 900;
-    background: linear-gradient(45deg, #ff4444, #ffaa44, #44ff44, #4444ff, #ff44ff);
+    background: linear-gradient(45deg, #8b6736, #d4c4a8, #daa520, #654d2f, #b8860b);
     background-size: 400% 400%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradientShift 1s ease infinite, legendaryBounce 1s ease-out;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 30px rgba(212, 196, 168, 0.7);
 }
 
 @keyframes legendaryBounce {
@@ -371,13 +477,29 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(45deg, #1a1a1a, #2a1a2a);
-    border: 2px solid #ff4444;
+    background: linear-gradient(135deg, #2d2520, #3e2f1c);
+    border: 3px solid #8b6736;
     border-radius: 15px;
     padding: 30px;
     max-width: 500px;
     width: 90%;
-    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+    box-shadow: 
+        0 0 30px rgba(139, 103, 54, 0.4),
+        inset 0 2px 0 rgba(212, 196, 168, 0.1),
+        inset 0 -2px 0 rgba(62, 47, 28, 0.8);
+    position: relative;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(212, 196, 168, 0.2);
+    border-radius: 10px;
+    pointer-events: none;
 }
 
 .modal-header {
@@ -390,10 +512,10 @@ body {
 }
 
 .modal-header h2 {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Uncial Antiqua', cursive;
     font-size: 1.5rem;
     margin: 0;
-    background: linear-gradient(45deg, #ff4444, #ffaa44);
+    background: linear-gradient(45deg, #8b6736, #d4c4a8);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -409,7 +531,7 @@ body {
 }
 
 .close-btn:hover {
-    color: #ff4444;
+    color: #a0522d;
 }
 
 .stat-grid {
@@ -423,19 +545,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.2), rgba(101, 77, 47, 0.1));
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(212, 196, 168, 0.2);
+    box-shadow: 
+        0 1px 3px rgba(62, 47, 28, 0.2),
+        inset 0 1px 0 rgba(212, 196, 168, 0.1);
 }
 
 .stat-label {
     font-weight: 600;
-    color: #cccccc;
+    color: #d4c4a8;
 }
 
 .stat-value {
     font-weight: 700;
-    color: #ffaa44;
+    color: #8b6736;
     font-size: 1.1rem;
 }
 
