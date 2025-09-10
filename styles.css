@@ -481,8 +481,10 @@ body::before {
     border: 3px solid #8b6736;
     border-radius: 15px;
     padding: 30px;
-    max-width: 500px;
+    max-width: 700px;
     width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
     box-shadow: 
         0 0 30px rgba(139, 103, 54, 0.4),
         inset 0 2px 0 rgba(212, 196, 168, 0.1),
@@ -532,6 +534,51 @@ body::before {
 
 .close-btn:hover {
     color: #a0522d;
+}
+
+/* Tabbed Interface */
+.stat-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(139, 103, 54, 0.3);
+}
+
+.stat-tab {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.2), rgba(101, 77, 47, 0.1));
+    border: 1px solid rgba(212, 196, 168, 0.3);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    color: #e8dcc0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.stat-tab.active {
+    background: linear-gradient(135deg, #8b6736, #654d2f);
+    border-color: #d4c4a8;
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(139, 103, 54, 0.3);
+}
+
+.stat-tab:hover:not(.active) {
+    opacity: 0.9;
+    background: linear-gradient(135deg, rgba(139, 103, 54, 0.3), rgba(101, 77, 47, 0.2));
+}
+
+.stat-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.stat-tab-content.active {
+    display: block;
 }
 
 .stat-grid {

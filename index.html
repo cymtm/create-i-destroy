@@ -11,6 +11,7 @@
         <header class="game-header">
             <h1 class="game-title">CREATE.I.DESTROY</h1>
             <div class="stats">
+                <span id="character-level" class="stat">Lv.1</span>
                 <span id="xp-total" class="stat">⚡ Wisdom: 0</span>
                 <span id="survival-total" class="stat">🏺 Fortune: 0</span>
                 <select id="difficulty-select" class="difficulty-select">
@@ -48,30 +49,114 @@
                 <button id="close-stats" class="close-btn">×</button>
             </div>
             <div class="modal-body">
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <span class="stat-label">Current Trial:</span>
-                        <span id="current-difficulty" class="stat-value">Adept</span>
+                <div class="stat-tabs">
+                    <button class="stat-tab active" data-tab="session">Session</button>
+                    <button class="stat-tab" data-tab="character">Character</button>
+                    <button class="stat-tab" data-tab="achievements">Achievements</button>
+                    <button class="stat-tab" data-tab="analytics">Analytics</button>
+                </div>
+                
+                <div class="stat-tab-content active" data-content="session">
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Current Trial:</span>
+                            <span id="current-difficulty" class="stat-value">Adept</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Session Wisdom:</span>
+                            <span id="session-xp" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Session Fortune:</span>
+                            <span id="session-survival" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Session Choices:</span>
+                            <span id="session-choices-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Combo:</span>
+                            <span id="current-combo" class="stat-value">0</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Quests Undertaken:</span>
-                        <span id="games-played" class="stat-value">0</span>
+                </div>
+                
+                <div class="stat-tab-content" data-content="character">
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Character Level:</span>
+                            <span id="character-level-stat" class="stat-value">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Skill Points:</span>
+                            <span id="skill-points-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Wisdom:</span>
+                            <span id="total-xp-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Fortune:</span>
+                            <span id="total-survival-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Experience Progress:</span>
+                            <span id="experience-progress" class="stat-value">0%</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Paths Chosen:</span>
-                        <span id="total-choices" class="stat-value">0</span>
+                </div>
+                
+                <div class="stat-tab-content" data-content="achievements">
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Quests Undertaken:</span>
+                            <span id="games-played" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Paths Chosen:</span>
+                            <span id="total-choices" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Greatest Succession:</span>
+                            <span id="highest-combo" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Legendary Moments:</span>
+                            <span id="legendary-moments-stat" class="stat-value">0</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Greatest Succession:</span>
-                        <span id="highest-combo" class="stat-value">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Session Wisdom:</span>
-                        <span id="session-xp" class="stat-value">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Session Fortune:</span>
-                        <span id="session-survival" class="stat-value">0</span>
+                </div>
+                
+                <div class="stat-tab-content" data-content="analytics">
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">High-Risk Choices:</span>
+                            <span id="high-risk-choices-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Safe Choices:</span>
+                            <span id="safe-choices-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Quick Decisions:</span>
+                            <span id="quick-choices-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">🟢 Novice Games:</span>
+                            <span id="easy-games-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">🟡 Adept Games:</span>
+                            <span id="normal-games-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">🟠 Master Games:</span>
+                            <span id="hard-games-stat" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">🔴 Legendary Games:</span>
+                            <span id="nightmare-games-stat" class="stat-value">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
