@@ -9,6 +9,7 @@ import {
 } from './ui.js';
 import { randomBetween, shuffle } from './utils.js';
 import { checkAchievements, loadAchievements, saveAchievements } from './achievements.js';
+import { startTutorial, isTutorialActive } from './tutorial.js';
 
 // Simple sound effects using Web Audio API
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -32,46 +33,79 @@ function playSound(frequency, duration, type = 'sine') {
   oscillator.stop(audioContext.currentTime + duration);
 }
 
+function updateHintDisplay() {
+  const choiceButtons = document.querySelectorAll('.choice-btn');
+  choiceButtons.forEach(btn => {
+    const keyHint = btn.querySelector('span[style*="opacity"]');
+    if (keyHint) {
+      keyHint.style.display = gameSettings.showHints ? 'inline' : 'none';
+    }
+  });
+}
+
 function playSoundEffect(effectType) {
+  if (!gameSettings.soundEnabled) return;
+  
+  const volume = gameSettings.masterVolume / 100 * 0.1; // Scale to reasonable volume
+  
+  function playTone(frequency, duration, type = 'sine') {
+    if (!audioContext) return;
+    
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    oscillator.type = type;
+    
+    gain.gain.setValueAtTime(volume, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration);
+  }
+  
   switch(effectType) {
     case 'choice':
-      playSound(800, 0.1, 'square');
+      playTone(800, 0.1, 'square');
       break;
     case 'success':
-      playSound(660, 0.3, 'sine');
-      setTimeout(() => playSound(880, 0.3, 'sine'), 100);
+      playTone(660, 0.3, 'sine');
+      setTimeout(() => playTone(880, 0.3, 'sine'), 100);
       break;
     case 'fail':
-      playSound(220, 0.5, 'sawtooth');
+      playTone(220, 0.5, 'sawtooth');
       break;
     case 'legendary':
       // Epic sound sequence
-      playSound(440, 0.2, 'sine');
-      setTimeout(() => playSound(550, 0.2, 'sine'), 150);
-      setTimeout(() => playSound(660, 0.3, 'sine'), 300);
-      setTimeout(() => playSound(880, 0.4, 'sine'), 500);
+      playTone(440, 0.2, 'sine');
+      setTimeout(() => playTone(550, 0.2, 'sine'), 150);
+      setTimeout(() => playTone(660, 0.3, 'sine'), 300);
+      setTimeout(() => playTone(880, 0.4, 'sine'), 500);
       break;
     case 'tick':
-      playSound(1000, 0.05, 'square');
+      playTone(1000, 0.05, 'square');
       break;
     case 'levelup':
       // Level up fanfare
-      playSound(523, 0.2, 'sine'); // C
-      setTimeout(() => playSound(659, 0.2, 'sine'), 200); // E
-      setTimeout(() => playSound(784, 0.2, 'sine'), 400); // G
-      setTimeout(() => playSound(1047, 0.4, 'sine'), 600); // C high
+      playTone(523, 0.2, 'sine'); // C
+      setTimeout(() => playTone(659, 0.2, 'sine'), 200); // E
+      setTimeout(() => playTone(784, 0.2, 'sine'), 400); // G
+      setTimeout(() => playTone(1047, 0.4, 'sine'), 600); // C high
       break;
     case 'achievement':
       // Achievement unlock
-      playSound(698, 0.15, 'sine'); // F
-      setTimeout(() => playSound(880, 0.15, 'sine'), 150); // A
-      setTimeout(() => playSound(1047, 0.3, 'sine'), 300); // C
+      playTone(698, 0.15, 'sine'); // F
+      setTimeout(() => playTone(880, 0.15, 'sine'), 150); // A
+      setTimeout(() => playTone(1047, 0.3, 'sine'), 300); // C
       break;
     case 'tab':
-      playSound(600, 0.08, 'square');
+      playTone(600, 0.08, 'square');
       break;
     case 'hover':
-      playSound(400, 0.05, 'triangle');
+      playTone(400, 0.05, 'triangle');
       break;
   }
 }
@@ -268,6 +302,9 @@ async function playScenario() {
   }
 
   function keyHandler(e) {
+    // Prevent game interactions during tutorial
+    if (isTutorialActive()) return;
+    
     const k = e.key.toUpperCase();
     onChoice(k);
   }
@@ -365,6 +402,8 @@ function updateTotalStats() {
 }
 
 function saveGame() {
+  if (!gameSettings.autoSave) return;
+  
   const saveData = {
     ...state,
     timestamp: Date.now()
@@ -423,7 +462,190 @@ function resetGameSession() {
   updateTotalStats();
 }
 
+// Game settings with defaults
+let gameSettings = {
+  masterVolume: 50,
+  soundEnabled: true,
+  autoSave: true,
+  showHints: true,
+  reducedMotion: false
+};
+
+function loadSettings() {
+  const saved = localStorage.getItem('createiDestroySettings');
+  if (saved) {
+    gameSettings = { ...gameSettings, ...JSON.parse(saved) };
+  }
+}
+
+function saveSettings() {
+  localStorage.setItem('createiDestroySettings', JSON.stringify(gameSettings));
+}
+
+function showSettings() {
+  const modal = document.getElementById('settings-modal');
+  
+  // Update UI elements with current settings
+  document.getElementById('master-volume').value = gameSettings.masterVolume;
+  document.getElementById('volume-display').textContent = `${gameSettings.masterVolume}%`;
+  document.getElementById('sound-toggle').className = `setting-toggle ${gameSettings.soundEnabled ? 'active' : ''}`;
+  document.getElementById('sound-toggle').textContent = gameSettings.soundEnabled ? 'ON' : 'OFF';
+  document.getElementById('autosave-toggle').className = `setting-toggle ${gameSettings.autoSave ? 'active' : ''}`;
+  document.getElementById('autosave-toggle').textContent = gameSettings.autoSave ? 'ON' : 'OFF';
+  document.getElementById('hints-toggle').className = `setting-toggle ${gameSettings.showHints ? 'active' : ''}`;
+  document.getElementById('hints-toggle').textContent = gameSettings.showHints ? 'ON' : 'OFF';
+  document.getElementById('motion-toggle').className = `setting-toggle ${gameSettings.reducedMotion ? 'active' : ''}`;
+  document.getElementById('motion-toggle').textContent = gameSettings.reducedMotion ? 'ON' : 'OFF';
+  
+  modal.classList.remove('hidden');
+}
+
+function hideSettings() {
+  const modal = document.getElementById('settings-modal');
+  modal.classList.add('hidden');
+}
+
+function exportSaveData() {
+  const saveData = {
+    game: JSON.parse(localStorage.getItem('createiDestroySave') || '{}'),
+    achievements: JSON.parse(localStorage.getItem('createiDestroyAchievements') || '[]'),
+    settings: gameSettings,
+    tutorial: localStorage.getItem('createiDestroyTutorialComplete') || 'false',
+    exportDate: new Date().toISOString()
+  };
+  
+  const dataStr = JSON.stringify(saveData, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `create-i-destroy-save-${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  
+  renderAchievement('💾 SAVE DATA EXPORTED!');
+}
+
+function importSaveData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const saveData = JSON.parse(e.target.result);
+        
+        if (confirm('This will overwrite your current save data. Are you sure?')) {
+          if (saveData.game) {
+            localStorage.setItem('createiDestroySave', JSON.stringify(saveData.game));
+          }
+          if (saveData.achievements) {
+            localStorage.setItem('createiDestroyAchievements', JSON.stringify(saveData.achievements));
+          }
+          if (saveData.settings) {
+            gameSettings = { ...gameSettings, ...saveData.settings };
+            saveSettings();
+          }
+          if (saveData.tutorial) {
+            localStorage.setItem('createiDestroyTutorialComplete', saveData.tutorial);
+          }
+          
+          renderAchievement('📥 SAVE DATA IMPORTED!');
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      } catch (error) {
+        alert('Invalid save file format!');
+      }
+    };
+    reader.readAsText(file);
+  };
+  
+  input.click();
+}
+
+function resetAllData() {
+  if (confirm('This will permanently delete ALL your progress, achievements, and settings. Are you absolutely sure?')) {
+    if (confirm('This action cannot be undone. Confirm deletion of all data?')) {
+      localStorage.removeItem('createiDestroySave');
+      localStorage.removeItem('createiDestroyAchievements');
+      localStorage.removeItem('createiDestroySettings');
+      localStorage.removeItem('createiDestroyTutorialComplete');
+      
+      renderAchievement('🗑️ ALL DATA RESET!');
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    }
+  }
+}
+
+function restartTutorial() {
+  localStorage.removeItem('createiDestroyTutorialComplete');
+  renderAchievement('🎓 TUTORIAL RESET!');
+  setTimeout(() => {
+    location.reload();
+  }, 1500);
+}
+
 function showStats() {
+  const modal = document.getElementById('stats-modal');
+  const difficultyNames = {
+    'easy': 'Novice',
+    'normal': 'Adept', 
+    'hard': 'Master',
+    'nightmare': 'Legendary'
+  };
+  
+  // Update basic stats
+  document.getElementById('current-difficulty').textContent = difficultyNames[state.difficulty] || state.difficulty;
+  document.getElementById('games-played').textContent = state.gamesPlayed;
+  document.getElementById('total-choices').textContent = state.totalChoices;
+  document.getElementById('highest-combo').textContent = state.highestCombo;
+  document.getElementById('session-xp').textContent = state.xp;
+  document.getElementById('session-survival').textContent = state.survival;
+  
+  // Add new advanced stats if elements exist
+  const updateIfExists = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
+  
+  updateIfExists('character-level-stat', state.characterLevel);
+  updateIfExists('skill-points-stat', state.skillPoints);
+  updateIfExists('total-xp-stat', state.totalXP);
+  updateIfExists('total-survival-stat', state.totalSurvival);
+  updateIfExists('legendary-moments-stat', state.legendaryMoments || 0);
+  updateIfExists('high-risk-choices-stat', state.highRiskChoices || 0);
+  updateIfExists('safe-choices-stat', state.safeChoices || 0);
+  updateIfExists('quick-choices-stat', state.quickChoices || 0);
+  updateIfExists('session-choices-stat', state.sessionChoices || 0);
+  
+  // Difficulty breakdown
+  updateIfExists('easy-games-stat', state.difficultyStats?.easy || 0);
+  updateIfExists('normal-games-stat', state.difficultyStats?.normal || 0);
+  updateIfExists('hard-games-stat', state.difficultyStats?.hard || 0);
+  updateIfExists('nightmare-games-stat', state.difficultyStats?.nightmare || 0);
+  
+  // Experience progress
+  updateIfExists('experience-progress', `${getExperienceProgress().toFixed(1)}%`);
+  
+  modal.classList.remove('hidden');
+}
+
+function hideStats() {
+  const modal = document.getElementById('stats-modal');
+  modal.classList.add('hidden');
+}
   const modal = document.getElementById('stats-modal');
   const difficultyNames = {
     'easy': 'Novice',
@@ -481,38 +703,119 @@ function restartGame() {
   }
 }
 
+function startGameAfterTutorial() {
+  playScenario();
+  changeBackground();
+}
+
+// Make function globally available
+window.startGameAfterTutorial = startGameAfterTutorial;
+
 function initializeUI() {
   const statsBtn = document.getElementById('stats-btn');
+  const settingsBtn = document.getElementById('settings-btn');
   const restartBtn = document.getElementById('restart-btn');
   const closeStats = document.getElementById('close-stats');
-  const modal = document.getElementById('stats-modal');
+  const closeSettings = document.getElementById('close-settings');
+  const statsModal = document.getElementById('stats-modal');
+  const settingsModal = document.getElementById('settings-modal');
   const difficultySelect = document.getElementById('difficulty-select');
 
   statsBtn.addEventListener('click', showStats);
+  settingsBtn.addEventListener('click', showSettings);
   restartBtn.addEventListener('click', restartGame);
   closeStats.addEventListener('click', hideStats);
+  closeSettings.addEventListener('click', hideSettings);
+  
+  // Settings controls
+  const volumeSlider = document.getElementById('master-volume');
+  const volumeDisplay = document.getElementById('volume-display');
+  const soundToggle = document.getElementById('sound-toggle');
+  const autosaveToggle = document.getElementById('autosave-toggle');
+  const hintsToggle = document.getElementById('hints-toggle');
+  const motionToggle = document.getElementById('motion-toggle');
+  const restartTutorialBtn = document.getElementById('restart-tutorial');
+  const exportSaveBtn = document.getElementById('export-save');
+  const importSaveBtn = document.getElementById('import-save');
+  const resetAllBtn = document.getElementById('reset-all');
+  
+  volumeSlider.addEventListener('input', (e) => {
+    gameSettings.masterVolume = parseInt(e.target.value);
+    volumeDisplay.textContent = `${gameSettings.masterVolume}%`;
+    saveSettings();
+  });
+  
+  soundToggle.addEventListener('click', () => {
+    gameSettings.soundEnabled = !gameSettings.soundEnabled;
+    soundToggle.className = `setting-toggle ${gameSettings.soundEnabled ? 'active' : ''}`;
+    soundToggle.textContent = gameSettings.soundEnabled ? 'ON' : 'OFF';
+    saveSettings();
+    playSoundEffect('choice');
+  });
+  
+  autosaveToggle.addEventListener('click', () => {
+    gameSettings.autoSave = !gameSettings.autoSave;
+    autosaveToggle.className = `setting-toggle ${gameSettings.autoSave ? 'active' : ''}`;
+    autosaveToggle.textContent = gameSettings.autoSave ? 'ON' : 'OFF';
+    saveSettings();
+    playSoundEffect('choice');
+  });
+  
+  hintsToggle.addEventListener('click', () => {
+    gameSettings.showHints = !gameSettings.showHints;
+    hintsToggle.className = `setting-toggle ${gameSettings.showHints ? 'active' : ''}`;
+    hintsToggle.textContent = gameSettings.showHints ? 'ON' : 'OFF';
+    saveSettings();
+    playSoundEffect('choice');
+    
+    // Update hint display immediately
+    updateHintDisplay();
+  });
+  
+  motionToggle.addEventListener('click', () => {
+    gameSettings.reducedMotion = !gameSettings.reducedMotion;
+    motionToggle.className = `setting-toggle ${gameSettings.reducedMotion ? 'active' : ''}`;
+    motionToggle.textContent = gameSettings.reducedMotion ? 'ON' : 'OFF';
+    saveSettings();
+    playSoundEffect('choice');
+    
+    // Apply reduced motion
+    document.body.style.animation = gameSettings.reducedMotion ? 'none' : '';
+  });
+  
+  restartTutorialBtn.addEventListener('click', restartTutorial);
+  exportSaveBtn.addEventListener('click', exportSaveData);
+  importSaveBtn.addEventListener('click', importSaveData);
+  resetAllBtn.addEventListener('click', resetAllData);
   
   // Difficulty selector
   difficultySelect.addEventListener('change', (e) => {
     state.difficulty = e.target.value;
-    saveGame();
+    if (gameSettings.autoSave) saveGame();
     playSoundEffect('choice');
   });
   
   // Load saved difficulty
   difficultySelect.value = state.difficulty;
   
-  // Close modal when clicking outside
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      hideStats();
-    }
+  // Close modals when clicking outside
+  [statsModal, settingsModal].forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
   });
   
-  // ESC key to close modal
+  // ESC key to close modals
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      hideStats();
+    if (e.key === 'Escape') {
+      if (!statsModal.classList.contains('hidden')) {
+        hideStats();
+      }
+      if (!settingsModal.classList.contains('hidden')) {
+        hideSettings();
+      }
     }
   });
   
@@ -538,10 +841,14 @@ function initializeUI() {
       playSoundEffect('tab');
     });
   });
+  
+  // Update hint display on load
+  updateHintDisplay();
 }
 
 // Start game
 window.addEventListener('DOMContentLoaded', () => {
+  loadSettings();
   loadGame();
   loadAchievements();
   
@@ -551,6 +858,10 @@ window.addEventListener('DOMContentLoaded', () => {
   
   updateTotalStats();
   initializeUI();
-  playScenario();
-  changeBackground(); // Set initial background
+  
+  // Start tutorial for new players, otherwise start game
+  if (!startTutorial()) {
+    playScenario();
+    changeBackground(); // Set initial background
+  }
 });

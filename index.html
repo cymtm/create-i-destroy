@@ -21,6 +21,7 @@
                     <option value="nightmare">🔴 Legendary</option>
                 </select>
                 <button id="stats-btn" class="stat-btn">📜 Chronicles</button>
+                <button id="settings-btn" class="stat-btn">⚙️ Settings</button>
                 <button id="restart-btn" class="stat-btn">🔄 Begin Anew</button>
             </div>
         </header>
@@ -157,6 +158,67 @@
                             <span class="stat-label">🔴 Legendary Games:</span>
                             <span id="nightmare-games-stat" class="stat-value">0</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ MYSTICAL SETTINGS</h2>
+                <button id="close-settings" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-section">
+                    <h3 class="setting-title">🔊 Audio Settings</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Master Volume</label>
+                        <div class="volume-control">
+                            <input type="range" id="master-volume" min="0" max="100" value="50" class="volume-slider">
+                            <span id="volume-display" class="volume-display">50%</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Sound Effects</label>
+                        <button id="sound-toggle" class="setting-toggle active">ON</button>
+                    </div>
+                </div>
+                
+                <div class="setting-section">
+                    <h3 class="setting-title">🎮 Game Settings</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Auto-save Progress</label>
+                        <button id="autosave-toggle" class="setting-toggle active">ON</button>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Show Keybind Hints</label>
+                        <button id="hints-toggle" class="setting-toggle active">ON</button>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Reduced Motion</label>
+                        <button id="motion-toggle" class="setting-toggle">OFF</button>
+                    </div>
+                </div>
+                
+                <div class="setting-section">
+                    <h3 class="setting-title">📊 Data Management</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">Tutorial</label>
+                        <button id="restart-tutorial" class="setting-btn">Restart Tutorial</button>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Save Data</label>
+                        <div class="data-controls">
+                            <button id="export-save" class="setting-btn">Export Save</button>
+                            <button id="import-save" class="setting-btn">Import Save</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Reset Progress</label>
+                        <button id="reset-all" class="setting-btn danger">Reset All Data</button>
                     </div>
                 </div>
             </div>
