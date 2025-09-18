@@ -15,8 +15,15 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
+        ...globals.browser,
         ...globals.es2022,
       },
+    },
+  },
+  {
+    files: ['files/js/**/*.js'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
   {
