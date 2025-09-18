@@ -14,25 +14,6 @@ import { startTutorial, isTutorialActive } from './tutorial.js';
 // Simple sound effects using Web Audio API
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-function playSound(frequency, duration, type = 'sine') {
-  if (!audioContext) return;
-  
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-  
-  oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  oscillator.type = type;
-  
-  gain.gain.setValueAtTime(0.1, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-  
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + duration);
-}
-
 function updateHintDisplay() {
   const choiceButtons = document.querySelectorAll('.choice-btn');
   choiceButtons.forEach(btn => {
@@ -314,6 +295,9 @@ async function playScenario() {
     }, 2200);
   }
 
+  // Expose choice handler globally for button clicks
+  window.gameChoiceHandler = onChoice;
+
   function keyHandler(e) {
     // Prevent game interactions during tutorial
     if (isTutorialActive()) return;
@@ -324,39 +308,42 @@ async function playScenario() {
 
   document.addEventListener('keydown', keyHandler);
 
-  // Progress bar and auto-lock
-  timer = setInterval(() => {
-    elapsed += interval;
-    progress = Math.max(0, 100 - (elapsed / (choiceWindow * 1000)) * 100);
-    renderProgressBar(progress, progress < 40);
+  // Small delay to ensure DOM is ready before starting timer
+  setTimeout(() => {
+    // Progress bar and auto-lock
+    timer = setInterval(() => {
+      elapsed += interval;
+      progress = Math.max(0, 100 - (elapsed / (choiceWindow * 1000)) * 100);
+      renderProgressBar(progress, progress < 40);
 
-    // Add ticking sound when time is running low
-    if (progress < 40 && progress > 0 && elapsed % 500 < interval) {
-      playSoundEffect('tick');
-    }
+      // Add ticking sound when time is running low
+      if (progress < 40 && progress > 0 && elapsed % 500 < interval) {
+        playSoundEffect('tick');
+      }
 
-    if (elapsed >= choiceWindow * 1000 && !choiceMade) {
-      state.locked = true;
-      document.removeEventListener('keydown', keyHandler);
+      if (elapsed >= choiceWindow * 1000 && !choiceMade) {
+        state.locked = true;
+        document.removeEventListener('keydown', keyHandler);
 
-      playSoundEffect('fail');
-      
-      // Auto-pick: fail state
-      renderScenario(state.current);
-      renderFeedback('⚡ CHOICE LOCKED IN... TOO LATE!', 'fail');
-      renderXP(0, 0);
-      state.combo = 0;
+        playSoundEffect('fail');
+        
+        // Auto-pick: fail state
+        renderScenario(state.current);
+        renderFeedback('⚡ CHOICE LOCKED IN... TOO LATE!', 'fail');
+        renderXP(0, 0);
+        state.combo = 0;
 
-      setTimeout(() => {
-        renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
-      }, 800);
-      setTimeout(() => {
-        playScenario();
-      }, 2000);
+        setTimeout(() => {
+          renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
+        }, 800);
+        setTimeout(() => {
+          playScenario();
+        }, 2000);
 
-      clearInterval(timer);
-    }
-  }, interval);
+        clearInterval(timer);
+      }
+    }, interval);
+  }, 100); // 100ms delay to ensure DOM is ready
 }
 
 function getTierIcon(tier) {
@@ -371,8 +358,7 @@ function getTierIcon(tier) {
 }
 
 function checkLevelUp() {
-  const experienceNeeded = state.characterLevel * 100;
-  if (state.totalXP >= experienceNeeded) {
+  if (state.totalXP >= state.characterLevel * 100) {
     state.characterLevel += 1;
     state.skillPoints += 1;
     renderAchievement(`🆙 LEVEL ${state.characterLevel}! +1 SKILL POINT`);
@@ -381,7 +367,6 @@ function checkLevelUp() {
 }
 
 function getExperienceProgress() {
-  const experienceNeeded = state.characterLevel * 100;
   const currentProgress = state.totalXP % 100;
   return Math.min(100, (currentProgress / 100) * 100);
 }
@@ -568,6 +553,7 @@ function importSaveData() {
           }, 2000);
         }
       } catch (error) {
+        console.error('Error importing save data:', error);
         alert('Invalid save file format!');
       }
     };
