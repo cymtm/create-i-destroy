@@ -153,6 +153,15 @@ let state = {
   }
 };
 
+// Game settings with defaults
+let gameSettings = {
+  masterVolume: 50,
+  soundEnabled: true,
+  autoSave: true,
+  showHints: true,
+  reducedMotion: false
+};
+
 const difficultySettings = {
   easy: { time: 5, xpMultiplier: 0.8, survivalMultiplier: 1.2 },
   normal: { time: 3, xpMultiplier: 1.0, survivalMultiplier: 1.0 },
@@ -188,6 +197,10 @@ async function playScenario() {
     if (state.locked) return;
     const choice = state.current.choices.find((c) => c.key === key);
     if (!choice) return;
+    
+    // Stop the timer immediately
+    clearInterval(timer);
+    
     state.locked = true;
     choiceMade = true;
     document.removeEventListener('keydown', keyHandler);
@@ -222,8 +235,6 @@ async function playScenario() {
     // Play success/fail sound
     playSoundEffect(choice.result.xp >= 15 ? 'success' : 'fail');
     
-    renderXP(choice.result.xp, choice.result.survival);
-    
     // Apply difficulty multipliers and skill bonuses
     const difficultySettings = {
       easy: { time: 5, xpMultiplier: 0.8, survivalMultiplier: 1.2 },
@@ -250,6 +261,9 @@ async function playScenario() {
       adjustedXP += Math.floor(bonus * 0.5);
       adjustedSurvival += Math.floor(bonus * 0.5);
     }
+    
+    // Display the actual values the player will receive
+    renderXP(adjustedXP, adjustedSurvival);
     
     state.xp += adjustedXP;
     state.survival += adjustedSurvival;
@@ -291,7 +305,6 @@ async function playScenario() {
         playSoundEffect('achievement');
       }, 1000);
     }
-    clearInterval(timer);
 
     setTimeout(() => {
       renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
@@ -462,15 +475,6 @@ function resetGameSession() {
   updateTotalStats();
 }
 
-// Game settings with defaults
-let gameSettings = {
-  masterVolume: 50,
-  soundEnabled: true,
-  autoSave: true,
-  showHints: true,
-  reducedMotion: false
-};
-
 function loadSettings() {
   const saved = localStorage.getItem('createiDestroySettings');
   if (saved) {
@@ -598,54 +602,6 @@ function restartTutorial() {
 }
 
 function showStats() {
-  const modal = document.getElementById('stats-modal');
-  const difficultyNames = {
-    'easy': 'Novice',
-    'normal': 'Adept', 
-    'hard': 'Master',
-    'nightmare': 'Legendary'
-  };
-  
-  // Update basic stats
-  document.getElementById('current-difficulty').textContent = difficultyNames[state.difficulty] || state.difficulty;
-  document.getElementById('games-played').textContent = state.gamesPlayed;
-  document.getElementById('total-choices').textContent = state.totalChoices;
-  document.getElementById('highest-combo').textContent = state.highestCombo;
-  document.getElementById('session-xp').textContent = state.xp;
-  document.getElementById('session-survival').textContent = state.survival;
-  
-  // Add new advanced stats if elements exist
-  const updateIfExists = (id, value) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  };
-  
-  updateIfExists('character-level-stat', state.characterLevel);
-  updateIfExists('skill-points-stat', state.skillPoints);
-  updateIfExists('total-xp-stat', state.totalXP);
-  updateIfExists('total-survival-stat', state.totalSurvival);
-  updateIfExists('legendary-moments-stat', state.legendaryMoments || 0);
-  updateIfExists('high-risk-choices-stat', state.highRiskChoices || 0);
-  updateIfExists('safe-choices-stat', state.safeChoices || 0);
-  updateIfExists('quick-choices-stat', state.quickChoices || 0);
-  updateIfExists('session-choices-stat', state.sessionChoices || 0);
-  
-  // Difficulty breakdown
-  updateIfExists('easy-games-stat', state.difficultyStats?.easy || 0);
-  updateIfExists('normal-games-stat', state.difficultyStats?.normal || 0);
-  updateIfExists('hard-games-stat', state.difficultyStats?.hard || 0);
-  updateIfExists('nightmare-games-stat', state.difficultyStats?.nightmare || 0);
-  
-  // Experience progress
-  updateIfExists('experience-progress', `${getExperienceProgress().toFixed(1)}%`);
-  
-  modal.classList.remove('hidden');
-}
-
-function hideStats() {
-  const modal = document.getElementById('stats-modal');
-  modal.classList.add('hidden');
-}
   const modal = document.getElementById('stats-modal');
   const difficultyNames = {
     'easy': 'Novice',

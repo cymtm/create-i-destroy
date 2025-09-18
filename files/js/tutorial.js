@@ -91,6 +91,11 @@ export function skipTutorial() {
   tutorialActive = false;
   hideTutorialOverlay();
   localStorage.setItem('createiDestroyTutorialComplete', 'true');
+  
+  // Start the actual game
+  if (window.startGameAfterTutorial) {
+    window.startGameAfterTutorial();
+  }
 }
 
 export function nextTutorialStep() {
