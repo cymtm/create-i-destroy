@@ -2,6 +2,7 @@
   "name": "legendary-repo",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "description": "A legendary repository built with excellence and innovation.",
   "scripts": {
     "build": "pnpm --filter app build",

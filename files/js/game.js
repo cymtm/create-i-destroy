@@ -646,54 +646,6 @@ function hideStats() {
   const modal = document.getElementById('stats-modal');
   modal.classList.add('hidden');
 }
-  const modal = document.getElementById('stats-modal');
-  const difficultyNames = {
-    'easy': 'Novice',
-    'normal': 'Adept', 
-    'hard': 'Master',
-    'nightmare': 'Legendary'
-  };
-  
-  // Update basic stats
-  document.getElementById('current-difficulty').textContent = difficultyNames[state.difficulty] || state.difficulty;
-  document.getElementById('games-played').textContent = state.gamesPlayed;
-  document.getElementById('total-choices').textContent = state.totalChoices;
-  document.getElementById('highest-combo').textContent = state.highestCombo;
-  document.getElementById('session-xp').textContent = state.xp;
-  document.getElementById('session-survival').textContent = state.survival;
-  
-  // Add new advanced stats if elements exist
-  const updateIfExists = (id, value) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  };
-  
-  updateIfExists('character-level-stat', state.characterLevel);
-  updateIfExists('skill-points-stat', state.skillPoints);
-  updateIfExists('total-xp-stat', state.totalXP);
-  updateIfExists('total-survival-stat', state.totalSurvival);
-  updateIfExists('legendary-moments-stat', state.legendaryMoments || 0);
-  updateIfExists('high-risk-choices-stat', state.highRiskChoices || 0);
-  updateIfExists('safe-choices-stat', state.safeChoices || 0);
-  updateIfExists('quick-choices-stat', state.quickChoices || 0);
-  updateIfExists('session-choices-stat', state.sessionChoices || 0);
-  
-  // Difficulty breakdown
-  updateIfExists('easy-games-stat', state.difficultyStats?.easy || 0);
-  updateIfExists('normal-games-stat', state.difficultyStats?.normal || 0);
-  updateIfExists('hard-games-stat', state.difficultyStats?.hard || 0);
-  updateIfExists('nightmare-games-stat', state.difficultyStats?.nightmare || 0);
-  
-  // Experience progress
-  updateIfExists('experience-progress', `${getExperienceProgress().toFixed(1)}%`);
-  
-  modal.classList.remove('hidden');
-}
-
-function hideStats() {
-  const modal = document.getElementById('stats-modal');
-  modal.classList.add('hidden');
-}
 
 function restartGame() {
   if (confirm('Are you sure you want to restart? This will reset your current session progress.')) {
