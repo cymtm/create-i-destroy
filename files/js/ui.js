@@ -21,6 +21,17 @@ export function renderScenario(scenario, selectedKey) {
     <div id="xpbar"></div>
     <div id="achieve"></div>
   `;
+  
+  // Add click event listeners to choice buttons
+  const choiceButtons = document.querySelectorAll('.choice-btn');
+  choiceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const key = button.getAttribute('data-key');
+      if (key && window.gameChoiceHandler) {
+        window.gameChoiceHandler(key);
+      }
+    });
+  });
 }
 
 export function renderProgressBar(percent, urgent = false) {
