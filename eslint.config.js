@@ -1,12 +1,15 @@
 /**
  * @file ESLint configuration for the Legendary Repository.
  * This file uses the new "flat config" format and is the modern standard.
+ * Updated with npm init @eslint/config recommendations.
  */
 
+import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default [
+  js.configs.recommended,
   ...tseslint.configs.recommended,
   {
     ignores: ['node_modules/', 'dist/', '**/generated_assets/*', '**/*.py', '**/*.d.ts', '**/vitest.config.ts'],
