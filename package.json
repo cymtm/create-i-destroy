@@ -18,12 +18,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/your-repo.git"
+    "url": "git+https://github.com/cymtm/create-i-destroy.git"
   },
   "bugs": {
-    "url": "https://github.com/your-org/your-repo/issues"
+    "url": "https://github.com/cymtm/create-i-destroy/issues"
   },
-  "homepage": "https://github.com/your-org/your-repo#readme",
+  "homepage": "https://cymtm.github.io/create-i-destroy",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "eslint": "^9.32.0",
