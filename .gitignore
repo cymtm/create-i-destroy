@@ -4,3 +4,10 @@ dist/
 *.log
 .DS_Store
 .env
+
+# Deployment artifacts
+create-i-destroy-itch.zip
+*.zip
+
+# Build info
+build-info.json
