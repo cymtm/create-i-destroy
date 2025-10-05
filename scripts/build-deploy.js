@@ -3,6 +3,8 @@
 /**
  * Build script for deploying CREATE.I.DESTROY to Itch.io
  * Creates a clean dist directory with all necessary files
+ * 
+ * Security note: All paths are hardcoded and do not accept user input
  */
 
 import fs from 'fs';
@@ -11,6 +13,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// Safe: Uses __dirname (script location), not user input
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 
@@ -26,7 +29,7 @@ if (fs.existsSync(distDir)) {
 fs.mkdirSync(distDir, { recursive: true });
 console.log('✅ Created dist directory\n');
 
-// Copy files
+// Copy files (hardcoded list, no user input)
 const filesToCopy = [
   { src: 'index.html', dest: 'index.html' },
   { src: 'styles.css', dest: 'styles.css' },
@@ -37,8 +40,9 @@ const filesToCopy = [
 
 console.log('📦 Copying files...');
 filesToCopy.forEach(({ src, dest }) => {
-  const srcPath = path.join(rootDir, src);
-  const destPath = path.join(distDir, dest);
+  // Safe: src and dest are from hardcoded array above
+  const srcPath = path.normalize(path.join(rootDir, src));
+  const destPath = path.normalize(path.join(distDir, dest));
   
   if (fs.existsSync(srcPath)) {
     fs.copyFileSync(srcPath, destPath);
@@ -48,7 +52,7 @@ filesToCopy.forEach(({ src, dest }) => {
   }
 });
 
-// Copy directories recursively
+// Copy directories recursively (hardcoded list, no user input)
 const dirsToCopy = [
   { src: 'files', dest: 'files' },
 ];
@@ -58,8 +62,9 @@ function copyDir(src, dest) {
   const entries = fs.readdirSync(src, { withFileTypes: true });
 
   for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
+    // Safe: entry.name comes from fs.readdirSync of a controlled directory
+    const srcPath = path.normalize(path.join(src, entry.name));
+    const destPath = path.normalize(path.join(dest, entry.name));
 
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
@@ -71,8 +76,9 @@ function copyDir(src, dest) {
 
 console.log('\n📂 Copying directories...');
 dirsToCopy.forEach(({ src, dest }) => {
-  const srcPath = path.join(rootDir, src);
-  const destPath = path.join(distDir, dest);
+  // Safe: src and dest are from hardcoded array above
+  const srcPath = path.normalize(path.join(rootDir, src));
+  const destPath = path.normalize(path.join(distDir, dest));
   
   if (fs.existsSync(srcPath)) {
     copyDir(srcPath, destPath);

@@ -3,6 +3,8 @@
 /**
  * Package script for CREATE.I.DESTROY
  * Creates a ZIP file ready for Itch.io upload
+ * 
+ * Security note: All paths are hardcoded and do not accept user input
  */
 
 import fs from 'fs';
@@ -12,6 +14,7 @@ import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// Safe: Uses __dirname (script location), not user input
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const outputZip = path.join(rootDir, 'create-i-destroy-itch.zip');
