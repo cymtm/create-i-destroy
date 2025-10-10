@@ -1,157 +1,158 @@
 # CREATE.I.DESTROY 🌟
 
-A mystical choice-based web game where your decisions shape reality itself!
+A mystical choice-based web game where your decisions shape reality itself. Navigate ancient trials by making timed decisions that affect your Wisdom (XP) and Fortune (survival) stats.
 
-## 🎮 About the Game
+## 🎮 Play the Game
 
-**CREATE.I.DESTROY** is an immersive browser-based narrative game that challenges players to make critical decisions under time pressure. Navigate through ancient trials, balance wisdom and fortune, and unlock achievements as you progress through mystical scenarios.
+**Live Game:** [https://cymtm.github.io/create-i-destroy](https://cymtm.github.io/create-i-destroy)
 
-### ✨ Key Features
+## ✨ Features
 
-- **🎯 Dynamic Choice System**: Make decisions using Q, W, or E keys
-- **⏰ Time Pressure Mechanics**: Each choice has a countdown timer
-- **📈 Character Progression**: Level up and gain experience through your choices
-- **⚖️ Dual Stats System**:
-  - **⚡ Wisdom**: Represents knowledge and power
-  - **🏺 Fortune**: Represents survival and luck
-- **🏆 Achievement System**: Unlock achievements across 5 tiers (Bronze 🥉, Silver 🥈, Gold 🥇, Legendary 🌟, Mythic 👑)
-- **⚔️ Four Difficulty Levels**:
-  - 🟢 Novice (10s per choice)
-  - 🟡 Adept (7s per choice)
-  - 🟠 Master (5s per choice)
-  - 🔴 Legendary (3s per choice)
-- **📊 Detailed Statistics**: Track your playstyle and progress
-- **🎨 Beautiful UI**: Mystical theme with animated backgrounds
-- **🔊 Sound Effects**: Immersive audio feedback
-- **📚 Tutorial System**: Learn the game mechanics step-by-step
+- **Timed Decision Making:** Make choices quickly with visual time pressure indicators
+- **Character Progression:** Level up and earn skill points as you gain experience
+- **Achievement System:** Unlock achievements across 5 tiers (Bronze 🥉, Silver 🥈, Gold 🥇, Legendary 🌟, Mythic 👑)
+- **Multiple Difficulty Levels:** From Novice to Legendary, choose your challenge
+- **Tutorial System:** Learn the game mechanics with an interactive tutorial
+- **Rich Scenarios:** Navigate 40+ unique mystical scenarios with meaningful choices
+- **Statistics Tracking:** View detailed analytics about your playstyle and progress
 
-## 🚀 How to Play
+## 🚀 Quick Start
 
-### Online (Itch.io)
-Visit our Itch.io page to play directly in your browser!
+### Play Locally
 
-### Local Development
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/cymtm/create-i-destroy.git
+   cd create-i-destroy
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install -g pnpm
+   pnpm install
+   ```
+
+3. **Serve the game:**
+   ```bash
+   python3 -m http.server 8000
+   ```
+
+4. **Open in browser:**
+   Navigate to `http://localhost:8000`
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm 10.13.1+
+- Python 3 (for local server)
+
+### Setup
+
 ```bash
-# Clone the repository
-git clone https://github.com/cymtm/create-i-destroy.git
-cd create-i-destroy
+# Install pnpm globally
+npm install -g pnpm
 
 # Install dependencies
 pnpm install
-
-# Serve the game locally
-python3 -m http.server 8000
-
-# Open http://localhost:8000 in your browser
 ```
 
-### Controls
-- **Q, W, E**: Make choices
-- **Click buttons**: Navigate menus and UI elements
-- **ESC**: Close modals
+### Build & Test
 
-## 🎯 Game Mechanics
+```bash
+# Build the TypeScript package
+pnpm run build
 
-### Wisdom vs Fortune
-Each choice presents a balance between wisdom (experience points) and fortune (survival):
-- **High Risk**: More wisdom, less fortune
-- **Balanced**: Equal wisdom and fortune
-- **Safe**: More fortune, less wisdom
+# Run linting
+pnpm run lint
 
-### Leveling System
-- Gain total wisdom to level up your character
-- Each level unlocks new achievements
-- Track your progress in the Chronicles
+# Run tests
+pnpm --filter app test
+```
 
-### Combo System
-- Make consecutive good choices to build combos
-- Higher combos increase your score multiplier
-- Breaking combos resets the multiplier
-
-## 🏆 Achievements
-
-Unlock achievements by:
-- Making your first choice
-- Reaching wisdom/fortune milestones
-- Building combo streaks
-- Completing difficulty challenges
-- And many more secret achievements!
-
-## 🛠️ Technology Stack
-
-- **Frontend**: Pure vanilla JavaScript ES6 modules
-- **Styling**: CSS3 with animations
-- **Audio**: Web Audio API for sound effects
-- **Storage**: LocalStorage for save data
-- **Testing**: Vitest for unit tests
-- **Build**: TypeScript compilation for app package
-
-## 📦 Project Structure
+### Project Structure
 
 ```
 create-i-destroy/
 ├── index.html              # Main game entry point
 ├── styles.css              # Game styling
 ├── files/
-│   └── js/
+│   └── js/                 # Game JavaScript modules
 │       ├── game.js         # Core game logic
 │       ├── scenarios.js    # Game scenarios
 │       ├── achievements.js # Achievement system
 │       ├── tutorial.js     # Tutorial system
-│       ├── ui.js           # UI rendering
-│       └── utils.js        # Utility functions
-└── packages/
-    └── app/                # TypeScript package for testing
+│       ├── ui.js          # UI rendering
+│       └── utils.js       # Utility functions
+├── packages/
+│   └── app/               # TypeScript package
+│       ├── src/           # TypeScript source
+│       ├── tests/         # Vitest tests
+│       └── dist/          # Compiled output
+└── .github/
+    └── workflows/         # CI/CD workflows
 ```
 
-## 🧪 Development
+## 📦 Deployment
 
-### Build & Test
-```bash
-# Install dependencies
-pnpm install
+The game is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
 
-# Build the app package
-pnpm run build
+### Deployment Workflow
 
-# Run tests
-pnpm --filter app test
+1. **Automatic Deployment:** Push to `main` branch triggers deployment
+2. **Manual Deployment:** Use GitHub Actions "Deploy to GitHub Pages" workflow
+3. **Pre-deployment Checks:**
+   - TypeScript build succeeds
+   - All tests pass
+   - Code passes linting
 
-# Lint code
-pnpm run lint
-```
+### Manual Deployment Steps
 
-### Code Quality
-- ESLint for code linting
-- TypeScript for type safety in tests
-- Vitest for unit testing
+If you need to deploy manually:
+
+1. Ensure all tests pass: `pnpm --filter app test`
+2. Ensure build succeeds: `pnpm run build`
+3. Ensure linting passes: `pnpm run lint`
+4. Push to main branch or trigger workflow manually
+
+### GitHub Pages Configuration
+
+The repository is configured to deploy from GitHub Actions:
+- **Settings → Pages → Source:** GitHub Actions
+- **Custom Domain:** (optional) Configure in repository settings
+
+## 🎯 How to Play
+
+1. **Choose Your Difficulty:** Select from Novice, Adept, Master, or Legendary
+2. **Read the Scenario:** Each trial presents a mystical challenge
+3. **Make Your Choice:** Press Q, W, or E to decide quickly
+4. **Watch the Timer:** The progress bar shows your remaining time
+5. **Track Your Progress:** Monitor Wisdom (⚡) and Fortune (🏺) stats
+6. **Unlock Achievements:** Complete challenges to earn achievements
+
+## 🏆 Achievement Tiers
+
+- 🥉 **Bronze:** Entry-level achievements
+- 🥈 **Silver:** Intermediate accomplishments
+- 🥇 **Gold:** Advanced achievements
+- 🌟 **Legendary:** Expert-level challenges
+- 👑 **Mythic:** Ultimate achievements
+
+## 🤝 Contributing
+
+Contributions are welcome! Please ensure:
+
+1. All tests pass: `pnpm --filter app test`
+2. Code passes linting: `pnpm run lint`
+3. Build succeeds: `pnpm run build`
+4. Manually test the game works correctly
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
+MIT
 
-## 👥 Credits
+## 🙏 Acknowledgments
 
-**Developed by**: cymtm
-**Game Design**: Ancient mystical traditions and cosmic inspiration
+Built with vanilla JavaScript, HTML5, and CSS3. No external runtime dependencies required.
 
-## 🌟 Support
-
-If you enjoy CREATE.I.DESTROY:
-- ⭐ Star this repository
-- 🎮 Share with friends
-- 🐛 Report bugs via GitHub issues
-- 💡 Suggest features
-
-## 🔮 Future Plans
-
-- More scenarios and endings
-- Additional achievements
-- Mobile-responsive design improvements
-- Sound settings and music tracks
-- Leaderboards and score tracking
-- Multiple save slots
-
----
-
-**Ready to shape your destiny? Begin your journey now!** 🚀

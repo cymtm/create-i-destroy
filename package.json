@@ -28,9 +28,10 @@
   "bugs": {
     "url": "https://github.com/cymtm/create-i-destroy/issues"
   },
-  "homepage": "https://github.com/cymtm/create-i-destroy#readme",
+  "homepage": "https://cymtm.github.io/create-i-destroy",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.3.0",
