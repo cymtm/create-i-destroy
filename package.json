@@ -1,20 +1,25 @@
 {
   "name": "legendary-repo",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A legendary repository built with excellence and innovation.",
+  "description": "CREATE.I.DESTROY - A mystical choice-based game where your decisions shape reality itself",
   "scripts": {
     "build": "pnpm --filter app build",
     "lint": "eslint .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy:build": "node scripts/build-deploy.js",
+    "deploy:package": "node scripts/package-deploy.js"
   },
   "keywords": [
-    "legendary",
-    "repository",
-    "typescript"
+    "game",
+    "browser-game",
+    "choice-game",
+    "mystical",
+    "web-game",
+    "itch-io"
   ],
-  "author": "Your Name or Organization",
+  "author": "cymtm",
   "license": "MIT",
   "repository": {
     "type": "git",
