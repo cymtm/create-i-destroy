@@ -107,6 +107,6 @@ export function renderAchievement(text) {
     achieve.innerHTML = `<div class="legendary">${text}</div>`;
     setTimeout(() => {
       achieve.innerHTML = '';
-    }, 2000);
+    }, 2000); // Achievement display duration
   }
 }

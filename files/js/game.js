@@ -11,6 +11,24 @@ import { randomBetween, shuffle } from './utils.js';
 import { checkAchievements, loadAchievements, saveAchievements } from './achievements.js';
 import { startTutorial, isTutorialActive } from './tutorial.js';
 
+// Game constants
+const AUDIO_BASE_VOLUME = 0.1; // Base volume multiplier for all sound effects
+const TIMER_INTERVAL_MS = 100; // Timer update interval in milliseconds
+const TIMER_START_DELAY_MS = 100; // Delay before starting scenario timer
+const ACHIEVEMENT_DISPLAY_MS = 2000; // How long to show achievement notifications
+const FEEDBACK_DELAY_MS = 800; // Delay before showing feedback
+const NEXT_SCENARIO_DELAY_MS = 2200; // Delay before loading next scenario
+const LEGENDARY_COMBO_THRESHOLD = 3; // Number of high-XP choices needed for legendary moment
+const LEGENDARY_XP_THRESHOLD = 10; // Minimum XP to count toward combo
+const LEVEL_UP_XP_REQUIREMENT = 100; // XP needed per level
+const QUICK_CHOICE_THRESHOLD = 0.5; // Seconds to be considered a quick choice
+const SLOW_CHOICE_RATIO = 0.8; // Ratio of time limit to be considered slow
+const URGENT_TIMER_THRESHOLD = 40; // Progress percentage when timer becomes urgent
+const TICK_SOUND_INTERVAL = 500; // Interval for ticking sound when time is low
+const HIGH_RISK_XP_RATIO = 0.7; // XP ratio to classify as high risk choice
+const SAFE_CHOICE_XP_RATIO = 0.3; // XP ratio to classify as safe choice
+const IMPORT_FILE_SIZE_LIMIT = 1024 * 1024; // Maximum import file size (1MB)
+
 // Simple sound effects using Web Audio API
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -32,7 +50,7 @@ function updateHintDisplay() {
 function playSoundEffect(effectType) {
   if (!gameSettings.soundEnabled) return;
   
-  const volume = gameSettings.masterVolume / 100 * 0.1; // Scale to reasonable volume
+  const volume = gameSettings.masterVolume / 100 * AUDIO_BASE_VOLUME;
   
   function playTone(frequency, duration, type = 'sine') {
     if (!audioContext) return;
@@ -182,7 +200,7 @@ async function playScenario() {
   // Decision timer - affected by difficulty and intuition skill
   const difficultyConfig = difficultySettings[state.difficulty];
   let choiceWindow = difficultyConfig.time + (state.skills.intuition * 0.3); // Intuition extends time
-  let interval = 100; // ms
+  let interval = TIMER_INTERVAL_MS;
   let elapsed = 0;
   let progress = 100;
   let choiceMade = false;
@@ -206,17 +224,17 @@ async function playScenario() {
     const timeUsed = elapsed / 1000;
     const timeLimit = choiceWindow;
     
-    if (timeUsed < 0.5) {
+    if (timeUsed < QUICK_CHOICE_THRESHOLD) {
       state.quickChoices = (state.quickChoices || 0) + 1;
-    } else if (timeUsed > timeLimit * 0.8) {
+    } else if (timeUsed > timeLimit * SLOW_CHOICE_RATIO) {
       state.slowChoices = (state.slowChoices || 0) + 1;
     }
     
     // Classify choice risk level based on XP vs survival ratio
     const xpRatio = choice.result.xp / (choice.result.xp + choice.result.survival);
-    if (xpRatio > 0.7) {
+    if (xpRatio > HIGH_RISK_XP_RATIO) {
       state.highRiskChoices = (state.highRiskChoices || 0) + 1;
-    } else if (xpRatio < 0.3) {
+    } else if (xpRatio < SAFE_CHOICE_XP_RATIO) {
       state.safeChoices = (state.safeChoices || 0) + 1;
     }
 
@@ -246,12 +264,12 @@ async function playScenario() {
     adjustedSurvival += Math.floor(adjustedSurvival * (state.skills.fortune * 0.1));
     
     // Courage bonus for high-risk choices
-    if (xpRatio > 0.7) {
+    if (xpRatio > HIGH_RISK_XP_RATIO) {
       adjustedXP += Math.floor(adjustedXP * (state.skills.courage * 0.15));
     }
     
     // Balance bonus for moderate choices
-    if (xpRatio >= 0.3 && xpRatio <= 0.7) {
+    if (xpRatio >= SAFE_CHOICE_XP_RATIO && xpRatio <= HIGH_RISK_XP_RATIO) {
       const bonus = Math.floor((adjustedXP + adjustedSurvival) * (state.skills.balance * 0.1));
       adjustedXP += Math.floor(bonus * 0.5);
       adjustedSurvival += Math.floor(bonus * 0.5);
@@ -271,12 +289,12 @@ async function playScenario() {
     checkLevelUp();
     
     updateTotalStats();
-    if (choice.result.xp >= 10) {
+    if (choice.result.xp >= LEGENDARY_XP_THRESHOLD) {
       state.combo += 1;
       if (state.combo > state.highestCombo) {
         state.highestCombo = state.combo;
       }
-      if (state.combo >= 3) {
+      if (state.combo >= LEGENDARY_COMBO_THRESHOLD) {
         playSoundEffect('legendary');
         renderAchievement('🔥LEGENDARY MOMENT🔥');
         state.legendaryTimer = Date.now();
@@ -303,10 +321,10 @@ async function playScenario() {
 
     setTimeout(() => {
       renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
-    }, 800);
+    }, FEEDBACK_DELAY_MS);
     setTimeout(() => {
       playScenario();
-    }, 2200);
+    }, NEXT_SCENARIO_DELAY_MS);
   }
 
   // Expose choice handler globally for button clicks
@@ -328,10 +346,10 @@ async function playScenario() {
     timer = setInterval(() => {
       elapsed += interval;
       progress = Math.max(0, 100 - (elapsed / (choiceWindow * 1000)) * 100);
-      renderProgressBar(progress, progress < 40);
+      renderProgressBar(progress, progress < URGENT_TIMER_THRESHOLD);
 
       // Add ticking sound when time is running low
-      if (progress < 40 && progress > 0 && elapsed % 500 < interval) {
+      if (progress < URGENT_TIMER_THRESHOLD && progress > 0 && elapsed % TICK_SOUND_INTERVAL < interval) {
         playSoundEffect('tick');
       }
 
@@ -349,15 +367,15 @@ async function playScenario() {
 
         setTimeout(() => {
           renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
-        }, 800);
+        }, FEEDBACK_DELAY_MS);
         setTimeout(() => {
           playScenario();
-        }, 2000);
+        }, NEXT_SCENARIO_DELAY_MS - FEEDBACK_DELAY_MS);
 
         clearInterval(timer);
       }
     }, interval);
-  }, 100); // 100ms delay to ensure DOM is ready
+  }, TIMER_START_DELAY_MS);
 }
 
 /**
@@ -381,7 +399,7 @@ function getTierIcon(tier) {
  * Awards skill points on level up
  */
 function checkLevelUp() {
-  if (state.totalXP >= state.characterLevel * 100) {
+  if (state.totalXP >= state.characterLevel * LEVEL_UP_XP_REQUIREMENT) {
     state.characterLevel += 1;
     state.skillPoints += 1;
     renderAchievement(`🆙 LEVEL ${state.characterLevel}! +1 SKILL POINT`);
@@ -394,8 +412,8 @@ function checkLevelUp() {
  * @returns {number} Progress percentage (0-100)
  */
 function getExperienceProgress() {
-  const currentProgress = state.totalXP % 100;
-  return Math.min(100, (currentProgress / 100) * 100);
+  const currentProgress = state.totalXP % LEVEL_UP_XP_REQUIREMENT;
+  return Math.min(100, (currentProgress / LEVEL_UP_XP_REQUIREMENT) * 100);
 }
 
 /**
@@ -648,7 +666,7 @@ function importSaveData() {
     if (!file) return;
     
     // Validate file size (max 1MB to prevent DoS)
-    if (file.size > 1024 * 1024) {
+    if (file.size > IMPORT_FILE_SIZE_LIMIT) {
       alert('File is too large! Maximum size is 1MB.');
       return;
     }
@@ -688,7 +706,7 @@ function importSaveData() {
           renderAchievement('📥 SAVE DATA IMPORTED!');
           setTimeout(() => {
             location.reload();
-          }, 2000);
+          }, ACHIEVEMENT_DISPLAY_MS);
         }
       } catch (error) {
         console.error('Error importing save data:', error);
@@ -717,7 +735,7 @@ function resetAllData() {
       renderAchievement('🗑️ ALL DATA RESET!');
       setTimeout(() => {
         location.reload();
-      }, 2000);
+      }, ACHIEVEMENT_DISPLAY_MS);
     }
   }
 }
