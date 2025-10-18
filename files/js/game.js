@@ -11,6 +11,24 @@ import { randomBetween, shuffle } from './utils.js';
 import { checkAchievements, loadAchievements, saveAchievements } from './achievements.js';
 import { startTutorial, isTutorialActive } from './tutorial.js';
 
+// Game constants
+const AUDIO_BASE_VOLUME = 0.1; // Base volume multiplier for all sound effects
+const TIMER_INTERVAL_MS = 100; // Timer update interval in milliseconds
+const TIMER_START_DELAY_MS = 100; // Delay before starting scenario timer
+const ACHIEVEMENT_DISPLAY_MS = 2000; // How long to show achievement notifications
+const FEEDBACK_DELAY_MS = 800; // Delay before showing feedback
+const NEXT_SCENARIO_DELAY_MS = 2200; // Delay before loading next scenario
+const LEGENDARY_COMBO_THRESHOLD = 3; // Number of high-XP choices needed for legendary moment
+const LEGENDARY_XP_THRESHOLD = 10; // Minimum XP to count toward combo
+const LEVEL_UP_XP_REQUIREMENT = 100; // XP needed per level
+const QUICK_CHOICE_THRESHOLD = 0.5; // Seconds to be considered a quick choice
+const SLOW_CHOICE_RATIO = 0.8; // Ratio of time limit to be considered slow
+const URGENT_TIMER_THRESHOLD = 40; // Progress percentage when timer becomes urgent
+const TICK_SOUND_INTERVAL = 500; // Interval for ticking sound when time is low
+const HIGH_RISK_XP_RATIO = 0.7; // XP ratio to classify as high risk choice
+const SAFE_CHOICE_XP_RATIO = 0.3; // XP ratio to classify as safe choice
+const IMPORT_FILE_SIZE_LIMIT = 1024 * 1024; // Maximum import file size (1MB)
+
 // Simple sound effects using Web Audio API
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -24,10 +42,15 @@ function updateHintDisplay() {
   });
 }
 
+/**
+ * Plays a sound effect using the Web Audio API
+ * @param {string} effectType - Type of sound effect to play
+ * Supported types: 'choice', 'success', 'fail', 'legendary', 'tick', 'levelup', 'achievement', 'tab', 'hover'
+ */
 function playSoundEffect(effectType) {
   if (!gameSettings.soundEnabled) return;
   
-  const volume = gameSettings.masterVolume / 100 * 0.1; // Scale to reasonable volume
+  const volume = gameSettings.masterVolume / 100 * AUDIO_BASE_VOLUME;
   
   function playTone(frequency, duration, type = 'sine') {
     if (!audioContext) return;
@@ -150,6 +173,10 @@ const difficultySettings = {
   nightmare: { time: 1.5, xpMultiplier: 1.5, survivalMultiplier: 0.5 }
 };
 
+/**
+ * Loads the next scenario from the queue
+ * Refills the queue with shuffled scenarios if empty
+ */
 function nextScenario() {
   if (!state.scenarioQueue.length) {
     state.scenarioQueue = shuffle([...scenarios]);
@@ -157,6 +184,11 @@ function nextScenario() {
   state.current = state.scenarioQueue.pop();
 }
 
+/**
+ * Main game loop - plays a scenario and handles player choices
+ * Manages timing, scoring, achievements, and progression
+ * @async
+ */
 async function playScenario() {
   state.locked = false;
   nextScenario();
@@ -168,7 +200,7 @@ async function playScenario() {
   // Decision timer - affected by difficulty and intuition skill
   const difficultyConfig = difficultySettings[state.difficulty];
   let choiceWindow = difficultyConfig.time + (state.skills.intuition * 0.3); // Intuition extends time
-  let interval = 100; // ms
+  let interval = TIMER_INTERVAL_MS;
   let elapsed = 0;
   let progress = 100;
   let choiceMade = false;
@@ -192,17 +224,17 @@ async function playScenario() {
     const timeUsed = elapsed / 1000;
     const timeLimit = choiceWindow;
     
-    if (timeUsed < 0.5) {
+    if (timeUsed < QUICK_CHOICE_THRESHOLD) {
       state.quickChoices = (state.quickChoices || 0) + 1;
-    } else if (timeUsed > timeLimit * 0.8) {
+    } else if (timeUsed > timeLimit * SLOW_CHOICE_RATIO) {
       state.slowChoices = (state.slowChoices || 0) + 1;
     }
     
     // Classify choice risk level based on XP vs survival ratio
     const xpRatio = choice.result.xp / (choice.result.xp + choice.result.survival);
-    if (xpRatio > 0.7) {
+    if (xpRatio > HIGH_RISK_XP_RATIO) {
       state.highRiskChoices = (state.highRiskChoices || 0) + 1;
-    } else if (xpRatio < 0.3) {
+    } else if (xpRatio < SAFE_CHOICE_XP_RATIO) {
       state.safeChoices = (state.safeChoices || 0) + 1;
     }
 
@@ -232,12 +264,12 @@ async function playScenario() {
     adjustedSurvival += Math.floor(adjustedSurvival * (state.skills.fortune * 0.1));
     
     // Courage bonus for high-risk choices
-    if (xpRatio > 0.7) {
+    if (xpRatio > HIGH_RISK_XP_RATIO) {
       adjustedXP += Math.floor(adjustedXP * (state.skills.courage * 0.15));
     }
     
     // Balance bonus for moderate choices
-    if (xpRatio >= 0.3 && xpRatio <= 0.7) {
+    if (xpRatio >= SAFE_CHOICE_XP_RATIO && xpRatio <= HIGH_RISK_XP_RATIO) {
       const bonus = Math.floor((adjustedXP + adjustedSurvival) * (state.skills.balance * 0.1));
       adjustedXP += Math.floor(bonus * 0.5);
       adjustedSurvival += Math.floor(bonus * 0.5);
@@ -257,12 +289,12 @@ async function playScenario() {
     checkLevelUp();
     
     updateTotalStats();
-    if (choice.result.xp >= 10) {
+    if (choice.result.xp >= LEGENDARY_XP_THRESHOLD) {
       state.combo += 1;
       if (state.combo > state.highestCombo) {
         state.highestCombo = state.combo;
       }
-      if (state.combo >= 3) {
+      if (state.combo >= LEGENDARY_COMBO_THRESHOLD) {
         playSoundEffect('legendary');
         renderAchievement('🔥LEGENDARY MOMENT🔥');
         state.legendaryTimer = Date.now();
@@ -289,10 +321,10 @@ async function playScenario() {
 
     setTimeout(() => {
       renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
-    }, 800);
+    }, FEEDBACK_DELAY_MS);
     setTimeout(() => {
       playScenario();
-    }, 2200);
+    }, NEXT_SCENARIO_DELAY_MS);
   }
 
   // Expose choice handler globally for button clicks
@@ -314,10 +346,10 @@ async function playScenario() {
     timer = setInterval(() => {
       elapsed += interval;
       progress = Math.max(0, 100 - (elapsed / (choiceWindow * 1000)) * 100);
-      renderProgressBar(progress, progress < 40);
+      renderProgressBar(progress, progress < URGENT_TIMER_THRESHOLD);
 
       // Add ticking sound when time is running low
-      if (progress < 40 && progress > 0 && elapsed % 500 < interval) {
+      if (progress < URGENT_TIMER_THRESHOLD && progress > 0 && elapsed % TICK_SOUND_INTERVAL < interval) {
         playSoundEffect('tick');
       }
 
@@ -335,17 +367,22 @@ async function playScenario() {
 
         setTimeout(() => {
           renderFeedback(`REALITY SHIFT IN 3...2...1...`, 'flame');
-        }, 800);
+        }, FEEDBACK_DELAY_MS);
         setTimeout(() => {
           playScenario();
-        }, 2000);
+        }, NEXT_SCENARIO_DELAY_MS - FEEDBACK_DELAY_MS);
 
         clearInterval(timer);
       }
     }, interval);
-  }, 100); // 100ms delay to ensure DOM is ready
+  }, TIMER_START_DELAY_MS);
 }
 
+/**
+ * Gets the tier icon emoji for an achievement tier
+ * @param {string} tier - Achievement tier name
+ * @returns {string} Emoji icon for the tier
+ */
 function getTierIcon(tier) {
   const tierIcons = {
     bronze: '🥉',
@@ -357,8 +394,12 @@ function getTierIcon(tier) {
   return tierIcons[tier] || '🏆';
 }
 
+/**
+ * Checks if player has leveled up and updates state
+ * Awards skill points on level up
+ */
 function checkLevelUp() {
-  if (state.totalXP >= state.characterLevel * 100) {
+  if (state.totalXP >= state.characterLevel * LEVEL_UP_XP_REQUIREMENT) {
     state.characterLevel += 1;
     state.skillPoints += 1;
     renderAchievement(`🆙 LEVEL ${state.characterLevel}! +1 SKILL POINT`);
@@ -366,11 +407,18 @@ function checkLevelUp() {
   }
 }
 
+/**
+ * Calculates progress towards next character level
+ * @returns {number} Progress percentage (0-100)
+ */
 function getExperienceProgress() {
-  const currentProgress = state.totalXP % 100;
-  return Math.min(100, (currentProgress / 100) * 100);
+  const currentProgress = state.totalXP % LEVEL_UP_XP_REQUIREMENT;
+  return Math.min(100, (currentProgress / LEVEL_UP_XP_REQUIREMENT) * 100);
 }
 
+/**
+ * Changes the background gradient to a random mystical color scheme
+ */
 function changeBackground() {
   const colors = [
     'linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a1a1a)',
@@ -386,6 +434,10 @@ function changeBackground() {
   document.body.style.backgroundSize = '400% 400%';
 }
 
+/**
+ * Updates the total stats display in the UI
+ * Shows current Wisdom, Fortune, and character level
+ */
 function updateTotalStats() {
   const xpElement = document.getElementById('xp-total');
   const survivalElement = document.getElementById('survival-total');
@@ -399,6 +451,10 @@ function updateTotalStats() {
   }
 }
 
+/**
+ * Saves the current game state to localStorage
+ * Respects autoSave setting
+ */
 function saveGame() {
   if (!gameSettings.autoSave) return;
   
@@ -409,38 +465,86 @@ function saveGame() {
   localStorage.setItem('createiDestroySave', JSON.stringify(saveData));
 }
 
+/**
+ * Safely validates and loads game state from localStorage
+ * Prevents potential security issues from corrupted or malicious data
+ * @returns {boolean} True if save data was loaded successfully, false otherwise
+ */
 function loadGame() {
-  const saveData = localStorage.getItem('createiDestroySave');
-  if (saveData) {
+  try {
+    const saveData = localStorage.getItem('createiDestroySave');
+    if (!saveData) {
+      return false;
+    }
+    
     const parsed = JSON.parse(saveData);
-    // Load persistent stats
-    state.gamesPlayed = parsed.gamesPlayed || 0;
-    state.totalChoices = parsed.totalChoices || 0;
-    state.highestCombo = parsed.highestCombo || 0;
-    state.difficulty = parsed.difficulty || 'normal';
     
-    // Load enhanced tracking
-    state.difficultyStats = parsed.difficultyStats || {
-      easy: 0, normal: 0, hard: 0, nightmare: 0
-    };
-    state.highRiskChoices = parsed.highRiskChoices || 0;
-    state.safeChoices = parsed.safeChoices || 0;
-    state.quickChoices = parsed.quickChoices || 0;
-    state.slowChoices = parsed.slowChoices || 0;
-    state.legendaryMoments = parsed.legendaryMoments || 0;
+    // Validate parsed data structure to prevent security issues
+    if (typeof parsed !== 'object' || parsed === null) {
+      console.warn('Invalid save data format - expected object');
+      return false;
+    }
     
-    // Load character progression
-    state.totalXP = parsed.totalXP || 0;
-    state.totalSurvival = parsed.totalSurvival || 0;
-    state.characterLevel = parsed.characterLevel || 1;
-    state.skillPoints = parsed.skillPoints || 0;
-    state.skills = parsed.skills || {
-      wisdom: 0, fortune: 0, intuition: 0, courage: 0, balance: 0
-    };
+    // Load persistent stats with validation
+    state.gamesPlayed = typeof parsed.gamesPlayed === 'number' && parsed.gamesPlayed >= 0 
+      ? parsed.gamesPlayed : 0;
+    state.totalChoices = typeof parsed.totalChoices === 'number' && parsed.totalChoices >= 0
+      ? parsed.totalChoices : 0;
+    state.highestCombo = typeof parsed.highestCombo === 'number' && parsed.highestCombo >= 0
+      ? parsed.highestCombo : 0;
+    
+    // Validate difficulty setting
+    const validDifficulties = ['easy', 'normal', 'hard', 'nightmare'];
+    state.difficulty = validDifficulties.includes(parsed.difficulty) 
+      ? parsed.difficulty : 'normal';
+    
+    // Load enhanced tracking with validation
+    state.difficultyStats = typeof parsed.difficultyStats === 'object' && parsed.difficultyStats !== null
+      ? {
+          easy: typeof parsed.difficultyStats.easy === 'number' ? parsed.difficultyStats.easy : 0,
+          normal: typeof parsed.difficultyStats.normal === 'number' ? parsed.difficultyStats.normal : 0,
+          hard: typeof parsed.difficultyStats.hard === 'number' ? parsed.difficultyStats.hard : 0,
+          nightmare: typeof parsed.difficultyStats.nightmare === 'number' ? parsed.difficultyStats.nightmare : 0
+        }
+      : { easy: 0, normal: 0, hard: 0, nightmare: 0 };
+    
+    state.highRiskChoices = typeof parsed.highRiskChoices === 'number' && parsed.highRiskChoices >= 0
+      ? parsed.highRiskChoices : 0;
+    state.safeChoices = typeof parsed.safeChoices === 'number' && parsed.safeChoices >= 0
+      ? parsed.safeChoices : 0;
+    state.quickChoices = typeof parsed.quickChoices === 'number' && parsed.quickChoices >= 0
+      ? parsed.quickChoices : 0;
+    state.slowChoices = typeof parsed.slowChoices === 'number' && parsed.slowChoices >= 0
+      ? parsed.slowChoices : 0;
+    state.legendaryMoments = typeof parsed.legendaryMoments === 'number' && parsed.legendaryMoments >= 0
+      ? parsed.legendaryMoments : 0;
+    
+    // Load character progression with validation
+    state.totalXP = typeof parsed.totalXP === 'number' && parsed.totalXP >= 0
+      ? parsed.totalXP : 0;
+    state.totalSurvival = typeof parsed.totalSurvival === 'number' && parsed.totalSurvival >= 0
+      ? parsed.totalSurvival : 0;
+    state.characterLevel = typeof parsed.characterLevel === 'number' && parsed.characterLevel >= 1
+      ? parsed.characterLevel : 1;
+    state.skillPoints = typeof parsed.skillPoints === 'number' && parsed.skillPoints >= 0
+      ? parsed.skillPoints : 0;
+    
+    // Load skills with validation
+    state.skills = typeof parsed.skills === 'object' && parsed.skills !== null
+      ? {
+          wisdom: typeof parsed.skills.wisdom === 'number' && parsed.skills.wisdom >= 0 ? parsed.skills.wisdom : 0,
+          fortune: typeof parsed.skills.fortune === 'number' && parsed.skills.fortune >= 0 ? parsed.skills.fortune : 0,
+          intuition: typeof parsed.skills.intuition === 'number' && parsed.skills.intuition >= 0 ? parsed.skills.intuition : 0,
+          courage: typeof parsed.skills.courage === 'number' && parsed.skills.courage >= 0 ? parsed.skills.courage : 0,
+          balance: typeof parsed.skills.balance === 'number' && parsed.skills.balance >= 0 ? parsed.skills.balance : 0
+        }
+      : { wisdom: 0, fortune: 0, intuition: 0, courage: 0, balance: 0 };
     
     return true;
+  } catch (error) {
+    console.error('Error loading save data:', error);
+    return false;
   }
-  return false;
 }
 
 function resetGameSession() {
@@ -460,10 +564,40 @@ function resetGameSession() {
   updateTotalStats();
 }
 
+/**
+ * Loads game settings from localStorage with validation
+ * Ensures all settings have valid values and types
+ */
 function loadSettings() {
-  const saved = localStorage.getItem('createiDestroySettings');
-  if (saved) {
-    gameSettings = { ...gameSettings, ...JSON.parse(saved) };
+  try {
+    const saved = localStorage.getItem('createiDestroySettings');
+    if (!saved) {
+      return;
+    }
+    
+    const parsed = JSON.parse(saved);
+    
+    // Validate and merge settings with type checking
+    if (typeof parsed === 'object' && parsed !== null) {
+      if (typeof parsed.masterVolume === 'number' && parsed.masterVolume >= 0 && parsed.masterVolume <= 100) {
+        gameSettings.masterVolume = parsed.masterVolume;
+      }
+      if (typeof parsed.soundEnabled === 'boolean') {
+        gameSettings.soundEnabled = parsed.soundEnabled;
+      }
+      if (typeof parsed.autoSave === 'boolean') {
+        gameSettings.autoSave = parsed.autoSave;
+      }
+      if (typeof parsed.showHints === 'boolean') {
+        gameSettings.showHints = parsed.showHints;
+      }
+      if (typeof parsed.reducedMotion === 'boolean') {
+        gameSettings.reducedMotion = parsed.reducedMotion;
+      }
+    }
+  } catch (error) {
+    console.error('Error loading settings:', error);
+    // Continue with default settings
   }
 }
 
@@ -518,6 +652,10 @@ function exportSaveData() {
   renderAchievement('💾 SAVE DATA EXPORTED!');
 }
 
+/**
+ * Imports save data from a JSON file with validation
+ * Ensures imported data is safe before overwriting existing save
+ */
 function importSaveData() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -527,36 +665,59 @@ function importSaveData() {
     const file = e.target.files[0];
     if (!file) return;
     
+    // Validate file size (max 1MB to prevent DoS)
+    if (file.size > IMPORT_FILE_SIZE_LIMIT) {
+      alert('File is too large! Maximum size is 1MB.');
+      return;
+    }
+    
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
         const saveData = JSON.parse(e.target.result);
         
+        // Validate save data structure
+        if (typeof saveData !== 'object' || saveData === null) {
+          throw new Error('Invalid save data format');
+        }
+        
         if (confirm('This will overwrite your current save data. Are you sure?')) {
-          if (saveData.game) {
+          // Validate and import game data
+          if (saveData.game && typeof saveData.game === 'object') {
             localStorage.setItem('createiDestroySave', JSON.stringify(saveData.game));
           }
-          if (saveData.achievements) {
+          
+          // Validate and import achievements
+          if (saveData.achievements && Array.isArray(saveData.achievements)) {
             localStorage.setItem('createiDestroyAchievements', JSON.stringify(saveData.achievements));
           }
-          if (saveData.settings) {
+          
+          // Validate and import settings
+          if (saveData.settings && typeof saveData.settings === 'object') {
             gameSettings = { ...gameSettings, ...saveData.settings };
             saveSettings();
           }
-          if (saveData.tutorial) {
+          
+          // Validate and import tutorial status
+          if (typeof saveData.tutorial === 'string' && (saveData.tutorial === 'true' || saveData.tutorial === 'false')) {
             localStorage.setItem('createiDestroyTutorialComplete', saveData.tutorial);
           }
           
           renderAchievement('📥 SAVE DATA IMPORTED!');
           setTimeout(() => {
             location.reload();
-          }, 2000);
+          }, ACHIEVEMENT_DISPLAY_MS);
         }
       } catch (error) {
         console.error('Error importing save data:', error);
-        alert('Invalid save file format!');
+        alert('Invalid save file format! Please select a valid save file.');
       }
     };
+    
+    reader.onerror = () => {
+      alert('Error reading file! Please try again.');
+    };
+    
     reader.readAsText(file);
   };
   
@@ -574,7 +735,7 @@ function resetAllData() {
       renderAchievement('🗑️ ALL DATA RESET!');
       setTimeout(() => {
         location.reload();
-      }, 2000);
+      }, ACHIEVEMENT_DISPLAY_MS);
     }
   }
 }
